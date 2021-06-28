@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "hyperstellar",
+  "version": "${version}",
+  "name": "Hyperstellar",
+  "description": "Explore an expansive universe in a custom built jump ship",
+  "authors": [
+    "Snakefangox"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/hyperstellar/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.snakefangox.hyperstellar.client.HyperstellarClient"
+    ],
+    "main": [
+      "net.snakefangox.hyperstellar.Hyperstellar"
+    ]
+  },
+  "mixins": [
+    "hyperstellar.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "fabric": "*",
+    "minecraft": "1.17"
+  }
+}

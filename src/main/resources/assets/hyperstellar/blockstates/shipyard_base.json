@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "yard_state=normal": { "model": "hyperstellar:block/shipyard_base" },
+    "yard_state=activated": { "model": "hyperstellar:block/shipyard_base_activated" },
+    "yard_state=invalid": { "model": "hyperstellar:block/shipyard_base_invalid" },
+    "yard_state=edge": { "model": "hyperstellar:block/shipyard_base_edge" }
+  }
+}

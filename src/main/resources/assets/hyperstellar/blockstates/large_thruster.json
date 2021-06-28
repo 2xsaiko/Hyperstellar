@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=north": { "model": "hyperstellar:block/large_thruster", "x": 90 },
+    "facing=south": { "model": "hyperstellar:block/large_thruster", "x": -90 },
+    "facing=west": { "model": "hyperstellar:block/large_thruster", "x": -90, "y": 90 },
+    "facing=east": { "model": "hyperstellar:block/large_thruster", "x": -90, "y": -90 },
+    "facing=up": { "model": "hyperstellar:block/large_thruster" },
+    "facing=down": { "model": "hyperstellar:block/large_thruster", "x": 180 }
+  }
+}

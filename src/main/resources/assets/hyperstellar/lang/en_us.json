@@ -1,0 +1,21 @@
+{
+  "itemGroup.hyperstellar.general": "Hyperstellar",
+  "hyperstellar.container.shipyard_controller": "Shipyard",
+  "hyperstellar.screen.shipyard_boot": "Shipyard computer booted...\nShipyard state unverified",
+  "hyperstellar.screen.shipyard_ready": "Shipyard Ready!",
+  "hyperstellar.screen.shipyard_not_ready": "Shipyard not complete!\nCheck structure shape and dimensions",
+  "hyperstellar.screen.shipyard_building": "Please Stand Back!\nShip construction in progress...",
+  "hyperstellar.screen.shipyard_build_done": "Ship construction finished!\nEnjoy your new ship!",
+  "hyperstellar.screen.shipyard_build_fail": "Ship construction failed!\nEnsure your ship is enclosed in the yard\nand properly connected",
+  "hyperstellar.screen.check_shipyard": "Check Shipyard",
+  "hyperstellar.screen.scan_ship": "Scan Ship",
+  "hyperstellar.screen.build_ship": "Build Ship",
+  "block.hyperstellar.tritanium_block": "Tritanium Block",
+  "block.hyperstellar.tritanium_ore": "Tritanium Ore",
+  "item.hyperstellar.tritanium_ingot": "Tritanium Ingot",
+  "block.hyperstellar.shipyard_truss": "Shipyard Truss",
+  "block.hyperstellar.shipyard_base": "Shipyard Base",
+  "block.hyperstellar.shipyard_controller": "Shipyard Controller",
+  "block.hyperstellar.small_thruster": "Small Thruster",
+  "block.hyperstellar.large_thruster": "Large Thruster"
+}
