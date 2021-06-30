@@ -33,6 +33,10 @@ dependencies {
 
 }
 
+minecraft {
+	accessWidener =  file("src/main/resources/hyperstellar.accesswidener")
+}
+
 processResources {
 	inputs.property "version", project.version
 

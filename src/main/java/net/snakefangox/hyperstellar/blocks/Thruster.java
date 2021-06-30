@@ -12,9 +12,12 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
+import net.minecraft.util.math.Direction;
+import net.snakefangox.hyperstellar.ships.ShipData;
+import net.snakefangox.hyperstellar.ships.ShipPropertyProvider;
 import org.jetbrains.annotations.Nullable;
 
-public class Thruster extends Block {
+public class Thruster extends Block implements ShipPropertyProvider {
 	private final double thrust;
 
 	public Thruster(double thrust) {
@@ -43,5 +46,17 @@ public class Thruster extends Block {
 	@Override
 	public BlockState mirror(BlockState state, BlockMirror mirror) {
 		return state.rotate(mirror.getRotation(state.get(Properties.FACING)));
+	}
+
+	@Override
+	public double rawPropChange(String propName, BlockState state, Direction forwards) {
+		var axis = state.get(Properties.FACING).getAxis();
+		if (axis == Direction.Axis.Y) {
+			return propName.equals(ShipData.VERT_THRUST) ? thrust : 0;
+		} else if (axis == forwards.getAxis()) {
+			return propName.equals(ShipData.FORWARD_THRUST) ? thrust : 0;
+		} else {
+			return propName.equals(ShipData.SIDE_THRUST) ? thrust : 0;
+		}
 	}
 }

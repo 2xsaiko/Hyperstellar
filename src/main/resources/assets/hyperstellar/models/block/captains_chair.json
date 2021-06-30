@@ -1,0 +1,76 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "hyperstellar:block/captains_chair",
+		"particle": "hyperstellar:block/captains_chair"
+	},
+	"elements": [
+		{
+			"name": "post",
+			"from": [4, 0, 4],
+			"to": [12, 10, 12],
+			"faces": {
+				"north": {"uv": [8, 0, 16, 10], "texture": "#0"},
+				"east": {"uv": [8, 0, 16, 10], "texture": "#0"},
+				"south": {"uv": [8, 0, 16, 10], "texture": "#0"},
+				"west": {"uv": [8, 0, 16, 10], "texture": "#0"},
+				"up": {"uv": [8, 0, 16, 8], "texture": "#0"},
+				"down": {"uv": [8, 0, 16, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "seat",
+			"from": [0, 10, 0],
+			"to": [16, 12, 16],
+			"faces": {
+				"north": {"uv": [0, 1, 8, 3], "texture": "#0"},
+				"east": {"uv": [0, 1, 8, 3], "texture": "#0"},
+				"south": {"uv": [0, 1, 8, 3], "texture": "#0"},
+				"west": {"uv": [0, 1, 8, 3], "texture": "#0"},
+				"up": {"uv": [0, 0, 8, 7], "texture": "#0"},
+				"down": {"uv": [8, 0, 16, 7], "texture": "#0"}
+			}
+		},
+		{
+			"name": "seatback",
+			"from": [0, 12, 14],
+			"to": [16, 32, 16],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 15.5, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 8, 11], "texture": "#0"},
+				"east": {"uv": [1, 0, 3, 11], "texture": "#0"},
+				"south": {"uv": [0, 0, 8, 11], "texture": "#0"},
+				"west": {"uv": [1, 0, 3, 11], "texture": "#0"},
+				"up": {"uv": [0, 1, 8, 3], "texture": "#0"},
+				"down": {"uv": [0, 0, 8, 11], "texture": "#0"}
+			}
+		},
+		{
+			"name": "armrest",
+			"from": [-1, 16, 2],
+			"to": [1, 18, 15],
+			"faces": {
+				"north": {"uv": [13, 11, 16, 14], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 13, 16, 16], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [10, 12, 12, 14], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 13, 16, 16], "texture": "#0"},
+				"up": {"uv": [0, 11, 16, 14], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [0, 13, 16, 16], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "armrest",
+			"from": [15, 16, 2],
+			"to": [17, 18, 15],
+			"faces": {
+				"north": {"uv": [13, 11, 16, 14], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 13, 16, 16], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [10, 11, 12, 13], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 13, 16, 16], "texture": "#0"},
+				"up": {"uv": [0, 11, 16, 14], "rotation": 90, "texture": "#0"},
+				"down": {"uv": [0, 13, 16, 16], "rotation": 90, "texture": "#0"}
+			}
+		}
+	]
+}

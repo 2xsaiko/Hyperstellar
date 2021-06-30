@@ -6,9 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
-import net.snakefangox.hyperstellar.blocks.ShipyardBase;
-import net.snakefangox.hyperstellar.blocks.ShipyardController;
-import net.snakefangox.hyperstellar.blocks.Thruster;
+import net.snakefangox.hyperstellar.blocks.*;
 import net.snakefangox.rapidregister.annotations.BlockMeta;
 import net.snakefangox.rapidregister.annotations.RegisterContents;
 
@@ -24,6 +22,11 @@ public class HBlocks {
 	public static final ShipyardController SHIPYARD_CONTROLLER = new ShipyardController();
 
 	// Ship
+	public static final ShipNameplate SHIP_NAMEPLATE = new ShipNameplate();
 	public static final Thruster SMALL_THRUSTER = new Thruster(4.0 * 4.0 * 4.0 * 3.0);
 	public static final Thruster LARGE_THRUSTER = new Thruster(9.0 * 9.0 * 9.0 * 3.0);
+	public static final ShieldBlock SHIELD_GENERATOR = new ShieldBlock(0, 10);
+	public static final ShieldBlock SHIELD_CAPACITOR = new ShieldBlock(50, 0);
+	public static final SeatBlock CAPTAINS_CHAIR = new SeatBlock(true);
+	public static final SeatBlock CREW_CHAIR = new SeatBlock(false);
 }

@@ -1,24 +1,33 @@
 package net.snakefangox.hyperstellar.blocks.entities;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIntArray;
 import net.minecraft.screen.PropertyDelegate;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.snakefangox.hyperstellar.blocks.ShipyardBase;
 import net.snakefangox.hyperstellar.register.HBlocks;
+import net.snakefangox.hyperstellar.register.HClientPackets;
 import net.snakefangox.hyperstellar.register.HEntities;
+import net.snakefangox.hyperstellar.ships.ShipBuilder;
+import net.snakefangox.hyperstellar.ships.ShipData;
+import net.snakefangox.hyperstellar.ships.ShipEntity;
+import net.snakefangox.worldshell.storage.LocalSpace;
+import net.snakefangox.worldshell.transfer.WorldShellConstructor;
 import net.snakefangox.worldshell.util.WSNbtHelper;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 public class ShipyardControllerBE extends BlockEntity implements PropertyDelegateHolder {
 
@@ -47,10 +56,10 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 		super(HEntities.SHIPYARD_CONTROLLER, pos, state);
 	}
 
-	public void getCommand(int command) {
+	public void getCommand(PlayerEntity player, int command) {
 		switch (command) {
 			case 0 -> checkShipyardValid();
-			case 1 -> scanShip();
+			case 1 -> scanShip(player);
 			case 2 -> tryBuildShip();
 		}
 	}
@@ -122,15 +131,47 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 			   yardSize.getBlockCountX() <= MAX_YARD_SIZE && yardSize.getBlockCountY() <= MAX_YARD_SIZE && yardSize.getBlockCountZ() <= MAX_YARD_SIZE;
 	}
 
-	private void scanShip() {
+	private void scanShip(PlayerEntity player) {
 		if (!state.isReady()) return;
 
+		Direction dir = getCachedState().get(Properties.HORIZONTAL_FACING);
+		ShipBuilder shipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
+		shipBuilder.forEachRemaining(blockPos -> {
+		});
+		ShipData shipData = shipBuilder.getShipData();
+
+		NbtCompound nbt = new NbtCompound();
+		nbt.putString("report", shipData.shipReport());
+
+		ServerPlayNetworking.send((ServerPlayerEntity) player, HClientPackets.SH_DATA_PACKET, PacketByteBufs.create().writeNbt(nbt));
 	}
 
 	private void tryBuildShip() {
+		checkShipyardValid();
 		if (!state.isReady()) return;
-		System.out.println("I'm trying");
+
+		Direction dir = getCachedState().get(Properties.HORIZONTAL_FACING);
+		ShipBuilder scanShipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
+		Optional<BlockBox> shipBounds = BlockBox.encompassPositions(() -> scanShipBuilder);
+
+		if (shipBounds.isEmpty()) {
+			state = State.FAILED;
+			return;
+		}
+
+		ShipBuilder shipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
+
+		WorldShellConstructor.create((ServerWorld) world, HEntities.SHIP,
+				shipBounds.get().getCenter(), shipBuilder, shipBuilder::loadShipData)
+				.construct(this::buildFinished);
+
+		state = State.BUILDING;
 	}
+
+	private void buildFinished(WorldShellConstructor.Result<ShipEntity> shipEntityResult) {
+		state = State.BUILT;
+	}
+
 
 	@Override
 	public PropertyDelegate getPropertyDelegate() {
@@ -144,7 +185,7 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 
 		NbtElement yardNbt = nbt.get("yard");
 		if (yardNbt instanceof NbtIntArray)
-			yard = WSNbtHelper.blockBoxFromNbt(((NbtIntArray)yardNbt).getIntArray());
+			yard = WSNbtHelper.blockBoxFromNbt(((NbtIntArray) yardNbt).getIntArray());
 	}
 
 	@Override

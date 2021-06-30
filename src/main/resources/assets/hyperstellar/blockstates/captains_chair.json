@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hyperstellar:block/captains_chair" },
+    "facing=south": { "model": "hyperstellar:block/captains_chair", "y": 180 },
+    "facing=west": { "model": "hyperstellar:block/captains_chair", "y": 270 },
+    "facing=east": { "model": "hyperstellar:block/captains_chair", "y": 90 }
+  }
+}

@@ -65,6 +65,11 @@ public class ShipProperties {
 		return properties.containsKey(propertyName) ? properties.get(propertyName).get() : 0;
 	}
 
+	public void addRaw(String propName, double amount) {
+		if (properties.containsKey(propName))
+			properties.get(propName).setRawValue(properties.get(propName).getRawValue() + amount);
+	}
+
 	public NbtCompound toNBT() {
 		NbtCompound nbt = new NbtCompound();
 		NbtCompound propsNbt = new NbtCompound();

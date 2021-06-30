@@ -1,6 +1,7 @@
 {
   "itemGroup.hyperstellar.general": "Hyperstellar",
   "hyperstellar.container.shipyard_controller": "Shipyard",
+  "hyperstellar.container.ship_nameplate": "Nameplate",
   "hyperstellar.screen.shipyard_boot": "Shipyard computer booted...\nShipyard state unverified",
   "hyperstellar.screen.shipyard_ready": "Shipyard Ready!",
   "hyperstellar.screen.shipyard_not_ready": "Shipyard not complete!\nCheck structure shape and dimensions",
@@ -10,6 +11,7 @@
   "hyperstellar.screen.check_shipyard": "Check Shipyard",
   "hyperstellar.screen.scan_ship": "Scan Ship",
   "hyperstellar.screen.build_ship": "Build Ship",
+  "hyperstellar.screen.name_ship": "Name Ship",
   "block.hyperstellar.tritanium_block": "Tritanium Block",
   "block.hyperstellar.tritanium_ore": "Tritanium Ore",
   "item.hyperstellar.tritanium_ingot": "Tritanium Ingot",
@@ -17,5 +19,11 @@
   "block.hyperstellar.shipyard_base": "Shipyard Base",
   "block.hyperstellar.shipyard_controller": "Shipyard Controller",
   "block.hyperstellar.small_thruster": "Small Thruster",
-  "block.hyperstellar.large_thruster": "Large Thruster"
+  "block.hyperstellar.large_thruster": "Large Thruster",
+  "block.hyperstellar.ship_nameplate": "Ship Nameplate",
+  "block.hyperstellar.shield_generator": "Shield Generator",
+  "block.hyperstellar.shield_capacitor": "Shield Capacitor",
+  "entity.hyperstellar.ship_type": "Ship Type",
+  "block.hyperstellar.captains_chair": "Captains Chair",
+  "block.hyperstellar.crew_chair": "Crew Chair"
 }
