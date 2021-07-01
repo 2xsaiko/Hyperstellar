@@ -136,8 +136,7 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 
 		Direction dir = getCachedState().get(Properties.HORIZONTAL_FACING);
 		ShipBuilder shipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
-		shipBuilder.forEachRemaining(blockPos -> {
-		});
+		shipBuilder.forEachRemaining(blockPos -> {});
 		ShipData shipData = shipBuilder.getShipData();
 
 		NbtCompound nbt = new NbtCompound();
@@ -152,17 +151,17 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 
 		Direction dir = getCachedState().get(Properties.HORIZONTAL_FACING);
 		ShipBuilder scanShipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
-		Optional<BlockBox> shipBounds = BlockBox.encompassPositions(() -> scanShipBuilder);
+		scanShipBuilder.forEachRemaining(pos1 -> {});
 
-		if (shipBounds.isEmpty()) {
+		if (scanShipBuilder.getCount() <= 1) {
 			state = State.FAILED;
 			return;
 		}
 
-		ShipBuilder shipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
+		var cog = scanShipBuilder.getCentreOfGravity();
+		ShipBuilder shipBuilder = new ShipBuilder(world, LocalSpace.of(cog.getX(), cog.getY(), cog.getZ()), yard, dir);
 
-		WorldShellConstructor.create((ServerWorld) world, HEntities.SHIP,
-				shipBounds.get().getCenter(), shipBuilder, shipBuilder::loadShipData)
+		WorldShellConstructor.create((ServerWorld) world, HEntities.SHIP, cog, shipBuilder, shipBuilder::loadShipData)
 				.construct(this::buildFinished);
 
 		state = State.BUILDING;

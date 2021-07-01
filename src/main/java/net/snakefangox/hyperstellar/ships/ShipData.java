@@ -18,6 +18,7 @@ public class ShipData {
 	public static final String MAX_SHIELD_INTEGRITY = "max_shield_integrity";
 	public static final String SHIELD_RECHARGE = "shield_recharge";
 	public static final String POWER = "power";
+	public static final String POWER_CONSUMPTION = "power_consumption";
 	public static final String TONNAGE = "tonnage";
 	public static final String FORWARD_THRUST = "forward_thrust";
 	public static final String SIDE_THRUST = "side_thrust";
@@ -40,6 +41,7 @@ public class ShipData {
 				new ShipProperty(MAX_SHIELD_INTEGRITY, 0),
 				new ShipProperty(SHIELD_RECHARGE, 0),
 				new ShipProperty(POWER, 0),
+				new ShipProperty(POWER_CONSUMPTION, 0),
 				new ShipProperty(TONNAGE, 0),
 				new ShipProperty(FORWARD_THRUST, 0),
 				new ShipProperty(SIDE_THRUST, 0),
@@ -49,6 +51,22 @@ public class ShipData {
 	public ShipData(NbtCompound nbt) {
 		properties = new ShipProperties();
 		fromNbt(nbt);
+	}
+
+	public void validateProperties() {
+		limitProperty(HULL_INTEGRITY, MAX_HULL_INTEGRITY);
+		limitProperty(SHIELD_INTEGRITY, MAX_SHIELD_INTEGRITY);
+	}
+
+	private void limitProperty(String val, String max) {
+		double amount = getRaw(val);
+		double limit = get(max);
+		if (amount > limit)
+			properties.getProperty(HULL_INTEGRITY).setRawValue(limit);
+	}
+
+	private double getRaw(String propertyName) {
+		return properties.getRaw(propertyName);
 	}
 
 	public double get(String propertyName) {
@@ -194,6 +212,6 @@ public class ShipData {
 
 	static {
 		ALL_SHIP_PROPS = new String[]{HULL_INTEGRITY, MAX_HULL_INTEGRITY, SHIELD_INTEGRITY, MAX_SHIELD_INTEGRITY, SHIELD_RECHARGE,
-				POWER, TONNAGE, FORWARD_THRUST, SIDE_THRUST, VERT_THRUST};
+				POWER, POWER_CONSUMPTION, TONNAGE, FORWARD_THRUST, SIDE_THRUST, VERT_THRUST};
 	}
 }

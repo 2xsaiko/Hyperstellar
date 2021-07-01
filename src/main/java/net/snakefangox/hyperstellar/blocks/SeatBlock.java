@@ -3,11 +3,19 @@ package net.snakefangox.hyperstellar.blocks;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.snakefangox.hyperstellar.ships.ShipEntity;
+import net.snakefangox.worldshell.entity.WorldShellEntity;
+import net.snakefangox.worldshell.storage.ShellAwareBlock;
 
-public class SeatBlock extends HorizontalFacingBlock {
+public class SeatBlock extends HorizontalFacingBlock implements ShellAwareBlock {
 	private final boolean canControl;
 
 	public SeatBlock(boolean canControl) {
@@ -25,6 +33,16 @@ public class SeatBlock extends HorizontalFacingBlock {
 	@Override
 	protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
+	}
+
+	@Override
+	public void onUseInShell(World world, WorldShellEntity entity, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		var bay = entity.getBay();
+		if (bay.isPresent() && entity instanceof ShipEntity) {
+			BlockPos seatPos = bay.get().toLocal(hit.getBlockPos());
+			((ShipEntity) entity).nextToRide(seatPos);
+			player.startRiding(entity);
+		}
 	}
 
 	public boolean canControl() {

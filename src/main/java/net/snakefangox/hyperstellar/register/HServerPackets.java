@@ -1,10 +1,12 @@
 package net.snakefangox.hyperstellar.register;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.snakefangox.hyperstellar.Hyperstellar;
 import net.snakefangox.hyperstellar.screens.DataScreen;
+import net.snakefangox.hyperstellar.ships.ShipDatatrackers;
 
 public class HServerPackets {
 	public static final Identifier SH_DATA_PACKET = new Identifier(Hyperstellar.MODID, "sh");
@@ -19,5 +21,10 @@ public class HServerPackets {
 				}
 			});
 		});
+	}
+
+	static {
+		TrackedDataHandlerRegistry.register(ShipDatatrackers.PASSENGER_MAP);
+		TrackedDataHandlerRegistry.register(ShipDatatrackers.SHIP_DATA);
 	}
 }

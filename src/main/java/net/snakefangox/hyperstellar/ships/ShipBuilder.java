@@ -1,9 +1,11 @@
 package net.snakefangox.hyperstellar.ships;
 
+import com.google.common.collect.AbstractIterator;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.CuboidBlockIterator;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -21,56 +23,39 @@ public class ShipBuilder implements Iterator<BlockPos> {
 	public static final double MAX_HULL = 200;
 
 	private final ShipData shipData = new ShipData();
+	private final Iterator<BlockPos> iterator;
 	private final BlockView world;
 	private final LocalSpace space;
-	private final BlockBox box;
-	private final BlockPos.Mutable currentPos = new BlockPos.Mutable();
-	private final BlockPos.Mutable nextPos = new BlockPos.Mutable();
+	private long totalX, totalY, totalZ;
+	private int count;
 
 	public ShipBuilder(BlockView world, LocalSpace space, BlockBox box, Direction forwards) {
 		this.world = world;
 		this.space = space;
-		this.box = box;
+		iterator = BlockPos.iterate(box.getMinX(), box.getMinY(), box.getMinZ(),
+				box.getMaxX(), box.getMaxY(), box.getMaxZ()).iterator();
 		shipData.setForwardDirection(forwards);
-		currentPos.set(box.getMinX(), box.getMinY(), box.getMinZ());
-		nextPos.set(box.getMinX(), box.getMinY(), box.getMinZ());
 	}
 
 	@Override
 	public boolean hasNext() {
-		if (world.getBlockState(currentPos).isAir()) {
-			nextPos.set(currentPos);
-			advance(nextPos);
-			while (world.getBlockState(currentPos).isAir() &&
-				   (nextPos.getX() <= box.getMaxX() || nextPos.getY() <= box.getMaxY() || nextPos.getZ() <= box.getMaxZ())) {
-				advance(nextPos);
-			}
-			currentPos.set(nextPos);
-		}
-		return currentPos.getX() <= box.getMaxX() || currentPos.getY() <= box.getMaxY() || currentPos.getZ() <= box.getMaxZ();
+		return iterator.hasNext();
 	}
 
 	@Override
 	public BlockPos next() {
-		advance(currentPos);
-		accept(world.getBlockState(currentPos), currentPos.toImmutable());
-		return currentPos;
-	}
-
-	private void advance(BlockPos.Mutable pos) {
-		if (pos.getX() > box.getMaxX()) {
-			pos.setX(box.getMinX());
-			pos.setY(pos.getY() + 1);
-		}
-		if (pos.getY() > box.getMaxY()) {
-			pos.setY(box.getMinY());
-			pos.setZ(pos.getZ() + 1);
-		}
-		pos.setX(pos.getX() + 1);
+		BlockPos pos = iterator.next();
+		accept(world.getBlockState(pos), pos);
+		return pos;
 	}
 
 	public void accept(BlockState state, BlockPos pos) {
 		if (state.isAir()) return;
+
+		++count;
+		totalX += pos.getX();
+		totalY += pos.getY();
+		totalZ += pos.getZ();
 
 		Block block = state.getBlock();
 		if (block instanceof ShipPropertyProvider) {
@@ -85,8 +70,8 @@ public class ShipBuilder implements Iterator<BlockPos> {
 				shipData.setShipName(((ShipNameplateBE) blockEntity).getName());
 		}
 
-		if (block instanceof Thruster) shipData.addThruster(state.get(Properties.FACING), space.toLocal(pos));
-		if (block instanceof SeatBlock) shipData.addSeat((SeatBlock) block, space.toLocal(pos));
+		if (block instanceof Thruster) shipData.addThruster(state.get(Properties.FACING), space.toLocal(pos.toImmutable()));
+		if (block instanceof SeatBlock) shipData.addSeat((SeatBlock) block, space.toLocal(pos.toImmutable()));
 
 		double weight = Math.min(state.getHardness(world, pos), MAX_WEIGHT);
 		double hull = Math.min(block.getBlastResistance(), MAX_HULL);
@@ -99,7 +84,15 @@ public class ShipBuilder implements Iterator<BlockPos> {
 		return shipData;
 	}
 
+	public BlockPos getCentreOfGravity() {
+		return new BlockPos(totalX / (float) count, totalY / (float) count, totalZ / (float) count);
+	}
+
 	public void loadShipData(ShipEntity shipEntity) {
 		shipEntity.setShipData(shipData);
+	}
+
+	public int getCount() {
+		return count;
 	}
 }

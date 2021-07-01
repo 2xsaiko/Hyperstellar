@@ -30,7 +30,7 @@ public class ShipModifier {
 
 	public enum Operation implements StringIdentifiable {
 		MULT("multiply", (a, b) -> a * b), ADD("add", Double::sum),
-		LIMIT("limit", Math::min), BOOST("boost", Math::max);
+		BOOST("boost", Math::max), LIMIT("limit", Math::min);
 
 		private final String name;
 		private final BiFunction<Double, Double, Double> op;

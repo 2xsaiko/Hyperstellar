@@ -18,6 +18,10 @@ public class ShipProperties {
 			this.properties.put(prop.getName(), prop);
 	}
 
+	public ShipProperty getProperty(String propertyKey) {
+		return properties.get(propertyKey);
+	}
+
 	public boolean addProperty(ShipProperty property) {
 		if (!properties.containsKey(property.getName())) {
 			properties.put(property.getName(), property);
@@ -63,6 +67,10 @@ public class ShipProperties {
 
 	public double get(String propertyName) {
 		return properties.containsKey(propertyName) ? properties.get(propertyName).get() : 0;
+	}
+
+	public double getRaw(String propertyName) {
+		return properties.containsKey(propertyName) ? properties.get(propertyName).getRawValue() : 0;
 	}
 
 	public void addRaw(String propName, double amount) {

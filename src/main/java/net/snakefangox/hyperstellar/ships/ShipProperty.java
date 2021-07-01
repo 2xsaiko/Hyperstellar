@@ -11,6 +11,7 @@ public class ShipProperty {
 
 	public ShipProperty(String name, double rawValue) {
 		this.name = name;
+		rawValue = Math.max(0, rawValue);
 		this.rawValue = rawValue;
 		value = rawValue;
 	}
@@ -30,6 +31,7 @@ public class ShipProperty {
 		value = rawValue;
 		for (ShipModifier.Modifier mod : modifiers)
 			value = mod.op().apply(value, mod.mod());
+		value = Math.max(0, value);
 	}
 
 	public String getName() {
@@ -45,6 +47,7 @@ public class ShipProperty {
 	}
 
 	public void setRawValue(double rawValue) {
+		rawValue = Math.max(0, rawValue);
 		this.rawValue = rawValue;
 		reCalcValue();
 	}

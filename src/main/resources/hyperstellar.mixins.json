@@ -4,6 +4,7 @@
   "package": "net.snakefangox.hyperstellar.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AccessDataTracker"
   ],
   "client": [
   ],
