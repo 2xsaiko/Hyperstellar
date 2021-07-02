@@ -30,8 +30,8 @@ public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSync
 	}
 
 	@Override
-	default void readFromNbt(NbtCompound nbt) {
-		setGalaxySeed(nbt.getLong("seed"));
+	default void writeToNbt(NbtCompound nbt) {
+		nbt.putLong("seed", getGalaxySeed());
 		NbtList sectorList = new NbtList();
 		getAllExistingSectors().forEach(sector -> {
 			NbtCompound secNbt = new NbtCompound();
@@ -42,8 +42,8 @@ public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSync
 	}
 
 	@Override
-	default void writeToNbt(NbtCompound nbt) {
-		nbt.putLong("seed", getGalaxySeed());
+	default void readFromNbt(NbtCompound nbt) {
+		setGalaxySeed(nbt.getLong("seed"));
 		NbtList sectorList = (NbtList) nbt.get("sectors");
 		for (int i = 0; i < sectorList.size(); i++) {
 			NbtCompound nbtSector = sectorList.getCompound(i);
