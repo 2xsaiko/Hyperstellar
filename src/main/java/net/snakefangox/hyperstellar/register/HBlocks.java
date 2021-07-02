@@ -37,4 +37,9 @@ public class HBlocks {
 	public static final PowerGenerator FUSION_REACTOR_CONTROLLER = new PowerGenerator(FabricBlockSettings.of(Material.METAL, MapColor.LIGHT_BLUE_GRAY).requiresTool().breakByTool(FabricToolTags.PICKAXES, 1).strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL), FusionGeneratorBE::new);
 	public static final Block FUSION_REACTOR_CHANNEL = new Block(FabricBlockSettings.of(Material.METAL, MapColor.LIGHT_BLUE_GRAY).requiresTool().breakByTool(FabricToolTags.PICKAXES, 1).strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL));
 	public static final Block FUSION_REACTOR_COIL = new Block(FabricBlockSettings.of(Material.METAL, MapColor.LIGHT_BLUE_GRAY).requiresTool().breakByTool(FabricToolTags.PICKAXES, 1).strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL));
+
+	// Navigation
+	public static final GalacticMap GALACTIC_MAP = new GalacticMap();
+
+	// Hyperspace
 }

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hyperstellar:block/galactic_map" },
+    "facing=south": { "model": "hyperstellar:block/galactic_map", "y": 180 },
+    "facing=west": { "model": "hyperstellar:block/galactic_map", "y": 270 },
+    "facing=east": { "model": "hyperstellar:block/galactic_map", "y": 90 }
+  }
+}

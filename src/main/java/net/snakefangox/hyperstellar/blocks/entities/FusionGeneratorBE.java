@@ -2,6 +2,7 @@ package net.snakefangox.hyperstellar.blocks.entities;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.InventoryProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -17,6 +18,7 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.WorldAccess;
 import net.snakefangox.hyperstellar.register.HBlocks;
 import net.snakefangox.hyperstellar.register.HEntities;
 import net.snakefangox.hyperstellar.register.HItems;
@@ -76,7 +78,7 @@ public class FusionGeneratorBE extends AbstractGeneratorBE implements PropertyDe
 
 	@Override
 	public void setRedstonePowered(boolean isPowered) {
-		super.setRedstonePowered(isPowered && (world.isClient() || getOrCheckCompleted()));
+		super.setRedstonePowered(isPowered && (world.isClient() || getOrCheckCompleted()) && powerTime > 0);
 	}
 
 	@Override
@@ -91,7 +93,9 @@ public class FusionGeneratorBE extends AbstractGeneratorBE implements PropertyDe
 				--powerTime;
 				return powerLevel;
 			}
+		}
 
+		if (powerTime == 0) {
 			ItemStack fuel = items.get(0);
 			ItemStack out = items.get(1);
 			boolean outEmpty = (out.isOf(HItems.EMPTY_FUSION_CELL) && out.getCount() < out.getMaxCount()) || out.isEmpty();
@@ -102,6 +106,7 @@ public class FusionGeneratorBE extends AbstractGeneratorBE implements PropertyDe
 				return powerLevel;
 			}
 		}
+
 		return 0;
 	}
 

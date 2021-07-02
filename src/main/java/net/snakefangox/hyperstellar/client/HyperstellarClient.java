@@ -14,10 +14,7 @@ import net.snakefangox.hyperstellar.client.render.ShipRenderer;
 import net.snakefangox.hyperstellar.register.HBlocks;
 import net.snakefangox.hyperstellar.register.HEntities;
 import net.snakefangox.hyperstellar.register.HScreens;
-import net.snakefangox.hyperstellar.screens.BackupGeneratorScreen;
-import net.snakefangox.hyperstellar.screens.FusionGeneratorScreen;
-import net.snakefangox.hyperstellar.screens.ShipNameplateScreen;
-import net.snakefangox.hyperstellar.screens.ShipyardScreen;
+import net.snakefangox.hyperstellar.screens.*;
 
 @Environment(EnvType.CLIENT)
 public class HyperstellarClient implements ClientModInitializer {
@@ -32,6 +29,8 @@ public class HyperstellarClient implements ClientModInitializer {
 				register(HScreens.BACKUP_GENERATOR_SCREEN, (h, i, t) -> new CottonInventoryScreen<>(h, i.player, t));
 		ScreenRegistry.<FusionGeneratorScreen, CottonInventoryScreen<FusionGeneratorScreen>>
 				register(HScreens.FUSION_GENERATOR_SCREEN, (h, i, t) -> new CottonInventoryScreen<>(h, i.player, t));
+		ScreenRegistry.<GalacticMapScreen, CottonInventoryScreen<GalacticMapScreen>>
+				register(HScreens.GALACTIC_MAP, (h, i, t) -> new CottonInventoryScreen<>(h, i.player, t));
 
 		// Transparent Blocks
 		BlockRenderLayerMap.INSTANCE.putBlock(HBlocks.SHIPYARD_TRUSS, RenderLayer.getCutout());

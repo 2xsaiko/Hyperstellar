@@ -3,7 +3,7 @@
   "id": "hyperstellar",
   "version": "${version}",
   "name": "Hyperstellar",
-  "description": "Explore an expansive universe in a custom built jump ship",
+  "description": "Explore an expansive universe in a custom built space ship",
   "authors": [
     "Snakefangox"
   ],
@@ -12,6 +12,12 @@
   "icon": "assets/hyperstellar/icon.png",
   "environment": "*",
   "entrypoints": {
+    "cardinal-components-entity": [
+      "net.snakefangox.hyperstellar.register.HComponents::registerEntityComponentFactories"
+    ],
+    "cardinal-components-scoreboard": [
+      "net.snakefangox.hyperstellar.register.HComponents::registerScoreboardComponentFactories"
+    ],
     "client": [
       "net.snakefangox.hyperstellar.client.HyperstellarClient"
     ],
@@ -22,9 +28,16 @@
   "mixins": [
     "hyperstellar.mixins.json"
   ],
+  "accessWidener" : "hyperstellar.accesswidener",
   "depends": {
     "fabricloader": ">=0.11.6",
     "fabric": "*",
     "minecraft": "1.17"
+  },
+  "custom": {
+    "cardinal-components": [
+      "hyperstellar:player_data",
+      "hyperstellar:galaxy"
+    ]
   }
 }

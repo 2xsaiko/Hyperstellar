@@ -70,7 +70,7 @@ public class BackupGeneratorBE extends AbstractGeneratorBE implements PropertyDe
 				powerTime = -RECHARGE_TICKS;
 			}
 		} else {
-			if (powerTime > 0 && powerTime < POWER_TICKS) {
+			if (powerTime != 0 && powerTime < POWER_TICKS) {
 				++powerTime;
 			} else {
 				powerTime = POWER_TICKS;

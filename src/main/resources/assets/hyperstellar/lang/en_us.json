@@ -4,6 +4,7 @@
   "hyperstellar.container.ship_nameplate": "Nameplate",
   "hyperstellar.container.backup_generator": "Backup Generator",
   "hyperstellar.container.fusion_generator": "Fusion Reactor",
+  "hyperstellar.container.galactic_map": "Galactic Map",
   "hyperstellar.screen.shipyard_boot": "Shipyard computer booted...\nShipyard state unverified",
   "hyperstellar.screen.shipyard_ready": "Shipyard Ready!",
   "hyperstellar.screen.shipyard_not_ready": "Shipyard not complete!\nCheck structure shape and dimensions",
@@ -21,6 +22,7 @@
   "hyperstellar.screen.structure_valid": "Structure: Valid",
   "hyperstellar.screen.structure_invalid": "Structure: Invalid",
   "hyperstellar.screen.power_generated": "Power generated: %d U",
+  "hyperstellar.screen.sector_unknown": "Sector Unknown",
   "block.hyperstellar.tritanium_block": "Tritanium Block",
   "block.hyperstellar.tritanium_ore": "Tritanium Ore",
   "item.hyperstellar.tritanium_ingot": "Tritanium Ingot",
@@ -42,5 +44,6 @@
   "item.hyperstellar.asteria_crystal": "Asteria Crystal",
   "block.hyperstellar.fusion_reactor_channel": "Fusion Reactor Channel",
   "item.hyperstellar.empty_fusion_cell": "Empty Fusion Cell",
-  "item.hyperstellar.filled_fusion_cell": "Filled Fusion Cell"
+  "item.hyperstellar.filled_fusion_cell": "Filled Fusion Cell",
+  "block.hyperstellar.galactic_map": "Galactic Map"
 }

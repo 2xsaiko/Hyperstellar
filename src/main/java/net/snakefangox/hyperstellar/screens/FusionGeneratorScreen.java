@@ -15,7 +15,7 @@ import net.snakefangox.hyperstellar.register.HScreens;
 public class FusionGeneratorScreen extends SyncedGuiDescription {
 
 	public FusionGeneratorScreen(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {
-		super(HScreens.FUSION_GENERATOR_SCREEN, syncId, playerInventory, getBlockInventory(ctx), getBlockPropertyDelegate(ctx, 4));
+		super(HScreens.FUSION_GENERATOR_SCREEN, syncId, playerInventory, getBlockInventory(ctx, 2), getBlockPropertyDelegate(ctx, 4));
 
 		WGridPanel root = new WGridPanel();
 		setRootPanel(root);
@@ -42,7 +42,8 @@ public class FusionGeneratorScreen extends SyncedGuiDescription {
 		root.add(timeRemaining, 0, 3, 8, 1);
 
 		WDynamicLabel powerProduced = new WDynamicLabel(() -> {
-			int powerLevel = getPropertyDelegate().get(0) > 0 ? getPropertyDelegate().get(2) : 0;
+			boolean powered = getPropertyDelegate().get(1) == 1;
+			int powerLevel = getPropertyDelegate().get(0) > 0  && powered ? getPropertyDelegate().get(2) : 0;
 			return I18n.translate("hyperstellar.screen.power_generated", powerLevel);
 		});
 		root.add(powerProduced, 0, 5, 8, 1);
