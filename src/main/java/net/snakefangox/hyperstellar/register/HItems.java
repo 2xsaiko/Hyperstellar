@@ -9,4 +9,7 @@ import net.snakefangox.rapidregister.annotations.RegisterContents;
 public class HItems {
 	// Resources
 	public static final Item TRITANIUM_INGOT = new Item(new FabricItemSettings().group(Hyperstellar.ITEM_GROUP));
+	public static final Item ASTERIA_CRYSTAL = new Item(new FabricItemSettings().group(Hyperstellar.ITEM_GROUP));
+	public static final Item EMPTY_FUSION_CELL = new Item(new FabricItemSettings().group(Hyperstellar.ITEM_GROUP));
+	public static final Item FILLED_FUSION_CELL = new Item(new FabricItemSettings().group(Hyperstellar.ITEM_GROUP));
 }

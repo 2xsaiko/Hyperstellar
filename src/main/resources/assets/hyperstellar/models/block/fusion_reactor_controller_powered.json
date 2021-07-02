@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "hyperstellar:block/fusion_reactor_coil",
+    "down": "hyperstellar:block/fusion_reactor_coil",
+    "up": "hyperstellar:block/fusion_reactor_coil",
+    "east": "hyperstellar:block/fusion_reactor_coil",
+    "west": "hyperstellar:block/fusion_reactor_coil",
+    "north": "hyperstellar:block/fusion_reactor_controller_powered",
+    "south": "hyperstellar:block/fusion_reactor_coil"
+  }
+}

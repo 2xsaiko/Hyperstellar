@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "hyperstellar:block/backup_generator",
+    "down": "hyperstellar:block/backup_generator",
+    "up": "hyperstellar:block/backup_generator",
+    "east": "hyperstellar:block/backup_generator",
+    "west": "hyperstellar:block/backup_generator",
+    "north": "hyperstellar:block/backup_generator_front",
+    "south": "hyperstellar:block/backup_generator"
+  }
+}

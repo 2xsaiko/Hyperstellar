@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,powered=false": { "model": "hyperstellar:block/backup_generator" },
+    "facing=south,powered=false": { "model": "hyperstellar:block/backup_generator", "y": 180 },
+    "facing=west,powered=false": { "model": "hyperstellar:block/backup_generator", "y": 270 },
+    "facing=east,powered=false": { "model": "hyperstellar:block/backup_generator", "y": 90 },
+	"facing=north,powered=true": { "model": "hyperstellar:block/backup_generator_powered" },
+    "facing=south,powered=true": { "model": "hyperstellar:block/backup_generator_powered", "y": 180 },
+    "facing=west,powered=true": { "model": "hyperstellar:block/backup_generator_powered", "y": 270 },
+    "facing=east,powered=true": { "model": "hyperstellar:block/backup_generator_powered", "y": 90 }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "hyperstellar:item/filled_fusion_cell"
+  }
+}

@@ -96,9 +96,9 @@ public class ShipEntity extends WorldShellEntity {
 	@Nullable
 	@Override
 	public Entity getPrimaryPassenger() {
-		/*for (var passenger : getPassengerList())
-			if (isCaptain(passenger)) return passenger;*/
-		return getFirstPassenger();
+		for (var passenger : getPassengerList())
+			if (isCaptain(passenger)) return passenger;
+			return null;
 	}
 
 	private boolean isCaptain(Entity passenger) {
