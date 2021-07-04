@@ -49,6 +49,11 @@ public class Galaxy implements HGalaxyComp {
 	}
 
 	@Override
+	public void loadWorlds(MinecraftServer server) {
+		getAllExistingSectors().forEach(sector -> sector.loadWorld(server));
+	}
+
+	@Override
 	public long getGalaxySeed() {
 		return galaxySeed;
 	}
