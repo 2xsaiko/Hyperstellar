@@ -9,8 +9,12 @@ import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegi
 import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.Identifier;
+import net.snakefangox.hyperstellar.Hyperstellar;
 import net.snakefangox.hyperstellar.client.render.ShipNameplateBER;
 import net.snakefangox.hyperstellar.client.render.ShipRenderer;
+import net.snakefangox.hyperstellar.dimensions.SpaceSkyProperties;
+import net.snakefangox.hyperstellar.mixin.AccessSkyProperties;
 import net.snakefangox.hyperstellar.register.HBlocks;
 import net.snakefangox.hyperstellar.register.HEntities;
 import net.snakefangox.hyperstellar.register.HScreens;
@@ -40,5 +44,11 @@ public class HyperstellarClient implements ClientModInitializer {
 
 		// Entities
 		EntityRendererRegistry.INSTANCE.register(HEntities.SHIP, ShipRenderer::new);
+
+		// Sky
+		AccessSkyProperties.getBY_IDENTIFIER().put(new Identifier(Hyperstellar.MODID, "space"),
+				new SpaceSkyProperties(false, true, 0.5f, "space"));
+		AccessSkyProperties.getBY_IDENTIFIER().put(new Identifier(Hyperstellar.MODID, "orbit"),
+				new SpaceSkyProperties(true, true, 0.5f, "space"));
 	}
 }

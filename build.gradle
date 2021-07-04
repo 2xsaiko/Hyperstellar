@@ -19,7 +19,10 @@ repositories {
 		name = 'Ladysnake Mods'
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
 	}
-	mavenLocal()
+	maven {
+		name = 'Jitpack'
+		url = 'https://jitpack.io'
+	}
 }
 
 dependencies {
@@ -32,8 +35,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation include("io.github.cottonmc:LibGui:${project.libgui_version}")
-	modImplementation include("net.snakefangox:worldshell:${project.worldshell_version}")
-	modImplementation include("net.snakefangox:Rapid-Register:${project.rapid_register_version}")
+	modImplementation include("com.github.Snakefangox:worldshell:${project.worldshell_version}")
+	modImplementation include("com.github.Snakefangox:rapid-register:${project.rapid_register_version}")
 	modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cca_version}")
 	modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cca_version}")
 	modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-scoreboard:${project.cca_version}")
