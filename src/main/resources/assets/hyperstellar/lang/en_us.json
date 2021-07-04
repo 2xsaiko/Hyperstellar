@@ -45,5 +45,6 @@
   "block.hyperstellar.fusion_reactor_channel": "Fusion Reactor Channel",
   "item.hyperstellar.empty_fusion_cell": "Empty Fusion Cell",
   "item.hyperstellar.filled_fusion_cell": "Filled Fusion Cell",
-  "block.hyperstellar.galactic_map": "Galactic Map"
+  "block.hyperstellar.galactic_map": "Galactic Map",
+  "block.hyperstellar.asteroid_rock": "Asteroid Rock"
 }

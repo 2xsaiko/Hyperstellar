@@ -15,6 +15,7 @@ import net.snakefangox.rapidregister.annotations.RegisterContents;
 @RegisterContents(defaultBlockMeta = @BlockMeta(blockItemGroup = "hyperstellar:general"))
 public class HBlocks {
 	// Resources
+	public static final Block ASTEROID_ROCK = new Block(FabricBlockSettings.of(Material.STONE, MapColor.GRAY).requiresTool().breakByTool(FabricToolTags.PICKAXES, 2).strength(5.0F, 6.0F).sounds(BlockSoundGroup.STONE));
 	public static final Block TRITANIUM_BLOCK = new Block(FabricBlockSettings.of(Material.METAL, MapColor.LIGHT_BLUE_GRAY).requiresTool().breakByTool(FabricToolTags.PICKAXES, 1).strength(3.0F, 6.0F).sounds(BlockSoundGroup.METAL));
 	public static final Block TRITANIUM_ORE = new Block(FabricBlockSettings.of(Material.STONE, MapColor.STONE_GRAY).requiresTool().breakByTool(FabricToolTags.PICKAXES, 2).strength(3.0F, 6.0F).sounds(BlockSoundGroup.STONE));
 
