@@ -6,6 +6,7 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -23,14 +24,13 @@ public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSync
 
 	void generateSector(SectorPos pos);
 
+	void generateOverworldSector();
+
 	Stream<Sector> getAllExistingSectors();
 
 	void loadWorlds(MinecraftServer server);
 
-	@Override
-	default void serverTick() {
-
-	}
+	boolean isSpaceDim(DimensionType dimension);
 
 	@Override
 	default void writeToNbt(NbtCompound nbt) {
@@ -56,4 +56,5 @@ public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSync
 			setSector(pos, sector);
 		}
 	}
+
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.StructuresConfig;
+import net.snakefangox.hyperstellar.galaxy.GalaxyLogic;
 import net.snakefangox.hyperstellar.register.*;
 import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
 import net.snakefangox.rapidregister.RapidRegister;
@@ -40,25 +41,6 @@ public class Hyperstellar implements ModInitializer {
 		HScreens.registerScreens();
 		HServerPackets.registerServerPackets();
 		HClientPackets.registerClientPackets();
-
-		// Events
-		CreateWorldsEvent.EVENT.register(server -> HComponents.GALAXY.get(server.getScoreboard()).loadWorlds(server));
-
-		CreateWorldsEvent.EVENT.register(Hyperstellar::registerTestSpace);
-	}
-
-	private static void registerTestSpace(MinecraftServer server) {
-		var key = RegistryKey.of(Registry.WORLD_KEY, new Identifier(MODID, "test_space"));
-
-		var typeKey = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, new Identifier(MODID, "space"));
-		Supplier<DimensionType> typeSupplier = () -> server.getRegistryManager().get(Registry.DIMENSION_TYPE_KEY).get(typeKey);
-
-		var source = new FixedBiomeSource(server.getRegistryManager().get(Registry.BIOME_KEY).get(BiomeKeys.THE_VOID));
-		var config = new StructuresConfig(Optional.empty(), Collections.emptyMap());
-		var chunkGen = new SpaceGenerator(source, config, server.getOverworld().getSeed());
-
-		var options = new DimensionOptions(typeSupplier, chunkGen);
-
-		DynamicWorldRegister.createDynamicWorld(server, key, options);
+		GalaxyLogic.registerGalaxyLogic();
 	}
 }

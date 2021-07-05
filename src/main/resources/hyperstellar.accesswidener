@@ -1,3 +1,6 @@
 accessWidener   v1  named
 # Entity stuff
 extendable method net/minecraft/entity/Entity updatePassengerPosition (Lnet/minecraft/entity/Entity;Lnet/minecraft/entity/Entity$PositionUpdater;)V
+
+# Teleport Stuff
+accessible class net/minecraft/server/command/TeleportCommand$LookTarget
