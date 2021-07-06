@@ -1,0 +1,9 @@
+{
+  "space_one_four": {
+    "subtitle": "subtitles.hyperstellar.space_one_four",
+    "sounds": [
+      "hyperstellar:space_one_four"
+    ],
+    "streams": true
+  }
+}

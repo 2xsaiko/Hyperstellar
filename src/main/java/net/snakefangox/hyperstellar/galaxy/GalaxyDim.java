@@ -13,6 +13,9 @@ import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.StructuresConfig;
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.register.HWorldGen;
+import net.snakefangox.hyperstellar.world_gen.OrbitGenerator;
 import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
 import net.snakefangox.worldshell.util.DynamicWorldRegister;
 import org.jetbrains.annotations.NotNull;
@@ -54,12 +57,12 @@ public class GalaxyDim {
 	}
 
 	@NotNull
-	public static DimensionOptions getOrbitDimensionOptions(Random random, MinecraftServer server, RegistryKey<DimensionType> typeKey) {
+	public static DimensionOptions getOrbitDimensionOptions(Random random, MinecraftServer server, RegistryKey<DimensionType> typeKey, boolean isOrbit) {
 		Supplier<DimensionType> orbitTypeSupplier = () -> server.getRegistryManager().get(Registry.DIMENSION_TYPE_KEY).get(typeKey);
 
-		var source = new FixedBiomeSource(server.getRegistryManager().get(Registry.BIOME_KEY).get(BiomeKeys.THE_VOID));
+		var source = new FixedBiomeSource(server.getRegistryManager().get(Registry.BIOME_KEY).get(HWorldGen.SPACE_BIOME));
 		var config = new StructuresConfig(Optional.empty(), Collections.emptyMap());
-		var gen = new SpaceGenerator(source, config, random.nextLong());
+		var gen = isOrbit ? new OrbitGenerator(source, config, random.nextLong()) : new SpaceGenerator(source, config, random.nextLong());
 
 		return new DimensionOptions(orbitTypeSupplier, gen);
 	}

@@ -11,54 +11,62 @@ import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.util.WordMarkovChain;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class Sector {
 
 	public static final RegistryKey<DimensionType> SECTOR_TYPE = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, new Identifier(Hyperstellar.MODID, "space"));
+	public static final WordMarkovChain NAME_GEN;
 
 	private final SectorPos pos;
+	private final Consumer<CelestialBody> registerBody;
 	private boolean generated;
 	private GalaxyDim sectorSpace;
 	private CelestialBody systemCenter;
 
-	public Sector(SectorPos pos) {
+	public Sector(SectorPos pos, Consumer<CelestialBody> registerBody) {
 		this.pos = pos;
+		this.registerBody = registerBody;
 	}
 
-	public void generateIfEmpty(MinecraftServer server, long seed, @Nullable RegistryKey<World> linkWorld) {
+	public void generateIfEmpty(MinecraftServer server, long seed, @Nullable RegistryKey<World> linkWorld, Galaxy galaxy) {
 		if (generated) return;
 		Random random = new Random(seed);
 		boolean isEmpty = random.nextFloat() < 0.2 && linkWorld != null;
 
-		var name = generateName(random);
+		var name = generateName(random, galaxy);
 
-		var ops = GalaxyDim.getOrbitDimensionOptions(random, server, SECTOR_TYPE);
+		var ops = GalaxyDim.getOrbitDimensionOptions(random, server, SECTOR_TYPE, false);
 		var key = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Hyperstellar.MODID, name));
 
 		sectorSpace = new GalaxyDim(key, ops);
 
 		if (!isEmpty)
-			systemCenter = new CelestialBody(0, name, new HashSet<>(), null, random, linkWorld, server);
+			systemCenter = new CelestialBody(0, name, new HashSet<>(), this, null, random, linkWorld, server);
 
 		loadWorld(server);
 		generated = true;
 	}
 
-	private String generateName(Random random) {
-		StringBuilder name = new StringBuilder();
-		var len = 10 + random.nextInt(10);
+	private String generateName(Random random, Galaxy galaxy) {
+		String name;
+		RegistryKey<World> sectorKey;
+		Random rand = new Random(random.nextLong());
+		do {
+			if (rand.nextBoolean()) {
+				name = NAME_GEN.generate(rand, 8, 0.95f) + "-" + NAME_GEN.generate(rand, 8, 0.95f);
+			} else {
+				name = NAME_GEN.generate(rand, 15, 0.95f);
+			}
+			sectorKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Hyperstellar.MODID, name));
+		} while (galaxy.sectorDimKeyExists(sectorKey));
 
-		while (name.length() < len) {
-			char ch = (char) random.nextInt(255);
-
-			if (Character.isAlphabetic(ch)) name.append(ch);
-		}
-
-		return name.toString();
+		return name;
 	}
 
 	public void tickSector(double time) {
@@ -83,6 +91,16 @@ public class Sector {
 		return systemCenter;
 	}
 
+	public RegistryKey<World> getOrbitOrSelfAtPos(double x, double y) {
+		if (systemCenter != null)
+			return systemCenter.getOrbitAt(x, y).orElse(sectorSpace.getWorldKey());
+		return sectorSpace.getWorldKey();
+	}
+
+	public void registerBody(CelestialBody body) {
+		registerBody.accept(body);
+	}
+
 	public void writeToNbt(NbtCompound nbt) {
 		nbt.putInt("pos", pos.getIndex());
 		nbt.putBoolean("generated", generated);
@@ -96,12 +114,20 @@ public class Sector {
 		generated = nbt.getBoolean("generated");
 		sectorSpace = new GalaxyDim(nbt.getCompound("sectorSpace"));
 		if (nbt.getKeys().contains("systemCenter")) {
-			systemCenter = new CelestialBody(null);
+			systemCenter = new CelestialBody(this, null);
 			systemCenter.readFromNbt(nbt);
 		}
 	}
 
 	public SectorPos getPos() {
 		return pos;
+	}
+
+	static {
+		NAME_GEN = new WordMarkovChain("Ichnaea Ara Anadeia Carina Perseus Perileos Nebula Seashell Cloud Shield " +
+									   "Crux Aurigae Lambda Amphiaraus Centaurus Serpent Hurricane Argon Archon Timis " +
+									   "Perileos Galaxy Apus Majoris Lyra Eridani Sagitta Peleus Theta Solymus Corona " +
+									   "Nemesis Phoroneus Nebula Pavo Nemesis Miriandynus Canis Phoroneus Crux Myrmidon " +
+									   "Corona Kentaurus Aquila Euthenia Zephyrus Nebula");
 	}
 }

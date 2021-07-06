@@ -8,7 +8,6 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec2f;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
@@ -19,6 +18,7 @@ import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.util.WordMarkovChain;
 import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,10 +31,12 @@ public class CelestialBody {
 	public static final double MAX_RADIUS = 10000;
 	public static final double MAX_SPEED = 360d / (20 * 60);
 	public static final RegistryKey<DimensionType> ORBIT_TYPE = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, new Identifier(Hyperstellar.MODID, "orbit"));
+	public static final WordMarkovChain NAME_GEN;
 
+	private final Sector sector;
 	@Nullable
 	private final CelestialBody parent;
-	private double radius;
+	private double size;
 	private double orbitDistance;
 	private double orbitSpeed;
 	private double orbitAngle;
@@ -45,40 +47,45 @@ public class CelestialBody {
 	private RegistryKey<World> linkedWorld;
 	private CelestialBody[] orbitingBodies = new CelestialBody[0];
 
-	public CelestialBody(@Nullable CelestialBody parent) {
+	public CelestialBody(Sector sector, @Nullable CelestialBody parent) {
+		this.sector = sector;
 		this.parent = parent;
 	}
 
-	public CelestialBody(double dist, String sectorName, Set<String> usedEnds, @Nullable CelestialBody parent,
+	public CelestialBody(double dist, String sectorName, Set<String> usedNames, Sector sector, @Nullable CelestialBody parent,
 						 Random random, @Nullable RegistryKey<World> linkedWorld, MinecraftServer server) {
+		this.sector = sector;
 		this.parent = parent;
-		radius = Math.min(random.nextFloat(), 0.0001) * MAX_RADIUS;
-		orbitDistance = dist + radius;
+		size = Math.min(random.nextFloat(), 0.0001) * MAX_RADIUS;
+		orbitDistance = dist + size;
 
 		orbitSpeed = Math.min(random.nextDouble(), 0.0001) * MAX_SPEED;
 		orbitAngle = random.nextDouble() * 360d;
 
-		var end = generateNameEnd(random, usedEnds);
-		var key = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Hyperstellar.MODID, sectorName + "_" + end));
-		var orbitKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Hyperstellar.MODID, sectorName + "_" + end + "orbit"));
+		var shouldLink = linkedWorld == null;
+		var name = shouldLink ? generateName(random, usedNames) : linkedWorld.getValue().getPath();
+		var orbitKey = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Hyperstellar.MODID, sectorName + "_" + name + "_orbit"));
 
-		DimensionOptions orbitOps = GalaxyDim.getOrbitDimensionOptions(random, server, ORBIT_TYPE);
+		DimensionOptions orbitOps = GalaxyDim.getOrbitDimensionOptions(random, server, ORBIT_TYPE, true);
 		orbit = new GalaxyDim(orbitKey, orbitOps);
 
-		if (linkedWorld == null) {
+		if (shouldLink) {
+			var key = RegistryKey.of(Registry.WORLD_KEY, new Identifier(Hyperstellar.MODID, sectorName + "_" + name));
 			body = generateBody(key, server, random);
 
-			var orbitingCount = random.nextInt(3) - usedEnds.size();
-			usedEnds.add(end);
+			var orbitingCount = random.nextInt(3) - usedNames.size();
+			usedNames.add(name);
 
 			if (orbitingCount > 0) {
 				orbitingBodies = new CelestialBody[orbitingCount];
 				for (int i = 0; i < orbitingCount; i++)
-					orbitingBodies[i] = new CelestialBody(radius, sectorName, usedEnds, this, random, null, server);
+					orbitingBodies[i] = new CelestialBody(size, sectorName, usedNames, sector, this, random, null, server);
 			}
 		} else {
 			this.linkedWorld = linkedWorld;
 		}
+
+		sector.registerBody(this);
 	}
 
 	private GalaxyDim generateBody(RegistryKey<World> key, MinecraftServer server, Random random) {
@@ -100,22 +107,19 @@ public class CelestialBody {
 
 	private DimensionType createPlanetDimensionType(Biome biome, Random random) {
 		return DimensionType.create(OptionalLong.empty(), true, false,
-				biome.getTemperature() + random.nextFloat() > 3, false,
+				biome.getTemperature() + random.nextFloat() > 3, true,
 				1, false, false, true, true, true,
 				0, 256, 256, DirectBiomeAccessType.INSTANCE, new Identifier(Hyperstellar.MODID, "overworld"),
 				new Identifier(Hyperstellar.MODID, "overworld"), 0f);
 	}
 
-	private String generateNameEnd(Random random, Set<String> usedEnds) {
-		StringBuilder end = new StringBuilder();
-		while (true) {
-			char ch = (char) random.nextInt(255);
-			if (Character.isLetterOrDigit(ch)) end.append(ch);
-
-			if (!usedEnds.contains(end.toString())) {
-				return end.toString();
-			}
-		}
+	private String generateName(Random random, Set<String> usedEnds) {
+		String name;
+		Random rand = new Random(random.nextLong());
+		do {
+			name = NAME_GEN.generate(rand, 10, 0.95f);
+		} while (usedEnds.contains(name));
+		return name;
 	}
 
 	public void tickBody(double time) {
@@ -156,12 +160,56 @@ public class CelestialBody {
 
 	}
 
+	public Optional<RegistryKey<World>> getOrbitAt(double x, double y) {
+		var pos = getPos();
+		if (x > pos.x() - size && x < pos.x() + size && y > pos.y() - size && y < pos.y() + size) {
+			return Optional.of(orbit.getWorldKey());
+		} else {
+			for (var oBody : orbitingBodies) {
+				var childResult = oBody.getOrbitAt(x, y);
+				if (childResult.isPresent()) return childResult;
+			}
+		}
+		return Optional.empty();
+	}
+
 	public GalaxyDim getOrbit() {
 		return orbit;
 	}
 
+	@Nullable
+	public GalaxyDim getBody() {
+		return body;
+	}
+
+	@Nullable
+	public RegistryKey<World> getBodyKey() {
+		return body != null ? body.getWorldKey() : linkedWorld;
+	}
+
+	@Nullable
+	public RegistryKey<World> getTransferKey(RegistryKey<World> key, boolean isUp) {
+		var bodyKey = getBodyKey();
+		if (key.equals(bodyKey) && isUp)
+			return orbit.getWorldKey();
+
+		if (key.equals(orbit.getWorldKey())) {
+			if (isUp) {
+				return sector.getSectorSpace().getWorldKey();
+			} else {
+				if (bodyKey != null) {
+					return bodyKey;
+				} else {
+					return orbit.getWorldKey();
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public void writeToNbt(NbtCompound nbt) {
-		nbt.putDouble("radius", radius);
+		nbt.putDouble("size", size);
 		nbt.putDouble("orbitDistance", orbitDistance);
 		nbt.putDouble("orbitSpeed", orbitSpeed);
 		nbt.putDouble("orbitAngle", orbitAngle);
@@ -182,7 +230,7 @@ public class CelestialBody {
 	}
 
 	public void readFromNbt(NbtCompound nbt) {
-		radius = nbt.getDouble("radius");
+		size = nbt.getDouble("size");
 		orbitDistance = nbt.getDouble("orbitDistance");
 		orbitSpeed = nbt.getDouble("orbitSpeed");
 		orbitAngle = nbt.getDouble("orbitAngle");
@@ -197,9 +245,18 @@ public class CelestialBody {
 		orbitingBodies = new CelestialBody[orbitingList.size()];
 		for (int i = 0; i < orbitingList.size(); i++) {
 			NbtCompound bodyNbt = orbitingList.getCompound(i);
-			CelestialBody nBody = new CelestialBody(this);
+			CelestialBody nBody = new CelestialBody(sector, this);
 			nBody.readFromNbt(bodyNbt);
 			orbitingBodies[i] = nBody;
 		}
+
+		sector.registerBody(this);
+	}
+
+	static {
+		NAME_GEN = new WordMarkovChain("Sun Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto Ceres " +
+									   "Pallas Vesta Hygiea Interamnia Europa Davida Sylvia Cybele Eunomia Juno Euphrosyne " +
+									   "Hektor Thisbe Bamberga Patientia Herculina Doris Ursula Camilla Eugenia Iris Amphitrite " +
+									   "Phobos Amalthea Ganymede Hyperion Titania Dysnomea Atlas Epimetheus Titan Oberon");
 	}
 }

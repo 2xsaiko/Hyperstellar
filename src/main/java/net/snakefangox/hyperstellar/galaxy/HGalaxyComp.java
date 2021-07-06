@@ -6,7 +6,8 @@ import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.util.registry.RegistryKey;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -24,13 +25,17 @@ public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSync
 
 	void generateSector(SectorPos pos);
 
-	void generateOverworldSector();
+	void generateDefaultSectors();
+
+	void registerCelestialBody(CelestialBody body);
 
 	Stream<Sector> getAllExistingSectors();
 
 	void loadWorlds(MinecraftServer server);
 
-	boolean isSpaceDim(DimensionType dimension);
+	boolean isSpaceDim(World dim);
+
+	@Nullable RegistryKey<World> getTransferDim(World dim, boolean isUp, double x, double y);
 
 	@Override
 	default void writeToNbt(NbtCompound nbt) {
@@ -46,15 +51,17 @@ public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSync
 
 	@Override
 	default void readFromNbt(NbtCompound nbt) {
+		onLoad();
 		setGalaxySeed(nbt.getLong("seed"));
 		NbtList sectorList = (NbtList) nbt.get("sectors");
 		for (int i = 0; i < sectorList.size(); i++) {
 			NbtCompound nbtSector = sectorList.getCompound(i);
 			SectorPos pos = SectorPos.fromIndex(nbtSector.getInt("pos"));
-			Sector sector = new Sector(pos);
+			Sector sector = new Sector(pos, this::registerCelestialBody);
 			sector.readFromNbt(nbtSector);
 			setSector(pos, sector);
 		}
 	}
 
+	void onLoad();
 }
