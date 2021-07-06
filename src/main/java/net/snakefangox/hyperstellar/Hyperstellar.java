@@ -35,7 +35,7 @@ public class Hyperstellar implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// Register
-		RapidRegister.register(MODID, HBlocks.class, HItems.class, HEntities.class);
+		RapidRegister.register(MODID, HBlocks.class, HItems.class, HEntities.class, HSounds.class);
 		HStructures.addStructures();
 		HWorldGen.registerChunkGenerators();
 		HScreens.registerScreens();

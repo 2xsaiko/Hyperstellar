@@ -14,7 +14,8 @@ import java.util.Set;
 @Mixin(TeleportCommand.class)
 public interface AccessTeleportCommand {
 	@Invoker
-	static void invokeTeleport(ServerCommandSource source, Entity target, ServerWorld world, double x, double y, double z, Set<PlayerPositionLookS2CPacket.Flag> movementFlags, float yaw, float pitch, @Nullable TeleportCommand.LookTarget facingLocation) {
+	static void invokeTeleport(ServerCommandSource source, Entity target, ServerWorld world, double x, double y, double z,
+							   Set<PlayerPositionLookS2CPacket.Flag> movementFlags, float yaw, float pitch, @Nullable TeleportCommand.LookTarget facingLocation) {
 		throw new AssertionError();
 	}
 }

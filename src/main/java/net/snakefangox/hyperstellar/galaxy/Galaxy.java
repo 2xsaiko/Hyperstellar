@@ -1,15 +1,18 @@
 package net.snakefangox.hyperstellar.galaxy;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.dimension.DimensionOptions;
-import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -20,6 +23,8 @@ public class Galaxy implements HGalaxyComp {
 	private final MinecraftServer server;
 	private long galaxySeed;
 	private final Sector[] sectors = new Sector[GALAXY_SIZE * GALAXY_SIZE];
+	private final BiMap<RegistryKey<World>, SectorPos> sectorKeyToPos = HashBiMap.create();
+	private final Map<RegistryKey<World>, CelestialBody> keyToCelestialBody = new HashMap<>();
 
 	public Galaxy(Scoreboard scoreboard, @Nullable MinecraftServer server) {
 		this.server = server;
@@ -44,6 +49,7 @@ public class Galaxy implements HGalaxyComp {
 	@Override
 	public void setSector(SectorPos pos, Sector sector) {
 		sectors[pos.getIndex()] = sector;
+		sectorKeyToPos.put(sector.getSectorSpace().getWorldKey(), pos);
 	}
 
 	@Override
@@ -51,20 +57,32 @@ public class Galaxy implements HGalaxyComp {
 		if (server == null) return;
 		Sector sector = getSector(pos);
 		if (sector == null)
-			sectors[pos.getIndex()] = sector = new Sector(pos);
+			sectors[pos.getIndex()] = sector = new Sector(pos, this::registerCelestialBody);
 
-		sector.generateIfEmpty(server, galaxySeed * pos.hashCode(), null);
+		sector.generateIfEmpty(server, galaxySeed * pos.hashCode(), null, this);
 	}
 
 	@Override
-	public void generateOverworldSector() {
+	public void generateDefaultSectors() {
 		int centre = (GALAXY_SIZE / 2);
 		SectorPos pos = new SectorPos(centre, centre);
 		Sector sector = getSector(pos);
 		if (sector == null)
-			sectors[pos.getIndex()] = sector = new Sector(pos);
+			sectors[pos.getIndex()] = sector = new Sector(pos, this::registerCelestialBody);
 
-		sector.generateIfEmpty(server, galaxySeed * pos.hashCode(), RegistryKey.of(Registry.WORLD_KEY, new Identifier("minecraft", "overworld")));
+		sector.generateIfEmpty(server, galaxySeed * pos.hashCode(),
+				RegistryKey.of(Registry.WORLD_KEY, new Identifier("minecraft", "overworld")), this);
+	}
+
+	public boolean sectorDimKeyExists(RegistryKey<World> name) {
+		return sectorKeyToPos.containsKey(name);
+	}
+
+	public void registerCelestialBody(CelestialBody body) {
+		keyToCelestialBody.put(body.getOrbit().getWorldKey(), body);
+		var bodyKey = body.getBodyKey();
+		if (bodyKey != null)
+			keyToCelestialBody.put(bodyKey, body);
 	}
 
 	@Override
@@ -78,12 +96,29 @@ public class Galaxy implements HGalaxyComp {
 	}
 
 	@Override
-	public boolean isSpaceDim(DimensionType dimension) {
-		if (server == null) return false;
-		DimensionType sectorSpaceType = server.getRegistryManager().get(Registry.DIMENSION_TYPE_KEY).get(Sector.SECTOR_TYPE);
-		DimensionType orbitSpaceType = server.getRegistryManager().get(Registry.DIMENSION_TYPE_KEY).get(CelestialBody.ORBIT_TYPE);
+	public boolean isSpaceDim(World dim) {
+		var key = dim.getRegistryKey();
+		return sectorKeyToPos.containsKey(key) ||
+			   (keyToCelestialBody.containsKey(key) && keyToCelestialBody.get(key).getOrbit().getWorldKey().equals(key));
+	}
 
-		return dimension.equals(sectorSpaceType) || dimension.equals(orbitSpaceType);
+	@Override
+	@Nullable
+	public RegistryKey<World> getTransferDim(World dim, boolean isUp, double x, double y) {
+		var key = dim.getRegistryKey();
+		if (!isUp && sectorKeyToPos.containsKey(key)) {
+			Sector sector = getSector(sectorKeyToPos.get(key));
+			return sector.getOrbitOrSelfAtPos(x, y);
+		} else if (keyToCelestialBody.containsKey(key)) {
+			return keyToCelestialBody.get(key).getTransferKey(key, isUp);
+		}
+		return null;
+	}
+
+	@Override
+	public void onLoad() {
+		sectorKeyToPos.clear();
+		keyToCelestialBody.clear();
 	}
 
 	@Override
