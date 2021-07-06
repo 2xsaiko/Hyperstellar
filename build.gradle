@@ -37,6 +37,7 @@ dependencies {
 	modImplementation include("io.github.cottonmc:LibGui:${project.libgui_version}")
 	modImplementation include("com.github.Snakefangox:worldshell:${project.worldshell_version}")
 	modImplementation include("com.github.Snakefangox:rapid-register:${project.rapid_register_version}")
+	modImplementation include("com.github.Snakefangox:DisableCustomWorldsAdvice:${project.dcw_version}")
 	modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:${project.cca_version}")
 	modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-entity:${project.cca_version}")
 	modImplementation include("io.github.onyxstudios.Cardinal-Components-API:cardinal-components-scoreboard:${project.cca_version}")
