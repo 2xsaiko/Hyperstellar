@@ -52,5 +52,6 @@
   "item.hyperstellar.filled_fusion_cell": "Filled Fusion Cell",
   "block.hyperstellar.galactic_map": "Galactic Map",
   "block.hyperstellar.asteroid_rock": "Asteroid Rock",
-  "subtitles.hyperstellar.space_one_four": "Space One Four"
+  "subtitles.hyperstellar.space_one_four": "Space One Four",
+  "block.hyperstellar.energy_conduit": "Energy Conduit"
 }

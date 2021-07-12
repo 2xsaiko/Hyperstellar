@@ -16,6 +16,7 @@ public class HEntities {
 	public static final BlockEntityType<BackupGeneratorBE> BACKUP_GENERATOR = FabricBlockEntityTypeBuilder.create(BackupGeneratorBE::new, HBlocks.BACKUP_GENERATOR).build();
 	public static final BlockEntityType<FusionGeneratorBE> FUSION_REACTOR = FabricBlockEntityTypeBuilder.create(FusionGeneratorBE::new, HBlocks.FUSION_REACTOR_CONTROLLER).build();
 	public static final BlockEntityType<GalacticMapBE> GALACTIC_MAP = FabricBlockEntityTypeBuilder.create(GalacticMapBE::new, HBlocks.GALACTIC_MAP).build();
+	public static final BlockEntityType<EnergyConduitBE> ENERGY_CONDUIT = FabricBlockEntityTypeBuilder.create(EnergyConduitBE::new, HBlocks.ENERGY_CONDUIT).build();
 
 
 	// Entity Entities
