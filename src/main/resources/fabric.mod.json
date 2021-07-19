@@ -28,7 +28,7 @@
   "mixins": [
     "hyperstellar.mixins.json"
   ],
-  "accessWidener" : "hyperstellar.accesswidener",
+  "accessWidener": "hyperstellar.accesswidener",
   "depends": {
     "fabricloader": ">=0.11.6",
     "fabric": "*",

@@ -1,7 +1,9 @@
 package net.snakefangox.hyperstellar.blocks;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.snakefangox.hyperstellar.ships.ShipData;
+import net.snakefangox.hyperstellar.ships.ShipPropertyProvider;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
@@ -13,9 +15,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.math.Direction;
-import net.snakefangox.hyperstellar.ships.ShipData;
-import net.snakefangox.hyperstellar.ships.ShipPropertyProvider;
-import org.jetbrains.annotations.Nullable;
+
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 public class Thruster extends Block implements ShipPropertyProvider {
 	private final double thrust;

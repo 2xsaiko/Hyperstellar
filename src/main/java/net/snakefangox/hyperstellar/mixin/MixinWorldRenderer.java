@@ -1,13 +1,5 @@
 package net.snakefangox.hyperstellar.mixin;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.WorldRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.resource.SynchronousResourceReloader;
-import net.minecraft.util.math.Matrix4f;
 import net.snakefangox.hyperstellar.dimensions.CustomSky;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
@@ -17,6 +9,16 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.VertexBuffer;
+import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.resource.SynchronousResourceReloader;
+import net.minecraft.util.math.Matrix4f;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 @Mixin(WorldRenderer.class)
 @Environment(EnvType.CLIENT)
 public abstract class MixinWorldRenderer implements SynchronousResourceReloader, AutoCloseable {
@@ -25,7 +27,9 @@ public abstract class MixinWorldRenderer implements SynchronousResourceReloader,
 	@Final
 	private MinecraftClient client;
 
-	@Shadow @Nullable private VertexBuffer starsBuffer;
+	@Shadow
+	@Nullable
+	private VertexBuffer starsBuffer;
 
 	@Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/math/Matrix4f;FLjava/lang/Runnable;)V",
 			at = @At("HEAD"))

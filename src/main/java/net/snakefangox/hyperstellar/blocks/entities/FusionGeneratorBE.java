@@ -1,8 +1,14 @@
 package net.snakefangox.hyperstellar.blocks.entities;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.snakefangox.hyperstellar.register.HBlocks;
+import net.snakefangox.hyperstellar.register.HEntities;
+import net.snakefangox.hyperstellar.register.HItems;
+import net.snakefangox.hyperstellar.screens.FusionGeneratorScreen;
+import net.snakefangox.hyperstellar.util.ImplementedInventory;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
-import net.minecraft.block.InventoryProvider;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
@@ -18,14 +24,6 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldAccess;
-import net.snakefangox.hyperstellar.register.HBlocks;
-import net.snakefangox.hyperstellar.register.HEntities;
-import net.snakefangox.hyperstellar.register.HItems;
-import net.snakefangox.hyperstellar.screens.BackupGeneratorScreen;
-import net.snakefangox.hyperstellar.screens.FusionGeneratorScreen;
-import net.snakefangox.hyperstellar.util.ImplementedInventory;
-import org.jetbrains.annotations.Nullable;
 
 public class FusionGeneratorBE extends AbstractGeneratorBE implements PropertyDelegateHolder, ImplementedInventory, SidedInventory {
 	public static final Text TITLE = new TranslatableText("hyperstellar.container.fusion_generator");
@@ -54,10 +52,10 @@ public class FusionGeneratorBE extends AbstractGeneratorBE implements PropertyDe
 		@Override
 		public void set(int index, int value) {
 			switch (index) {
-				case 0 -> powerTime = value;
-				case 1 -> setRedstonePowered(value == 1);
-				case 2 -> powerLevel = value;
-				case 3 -> checkCache = value == 1;
+			case 0 -> powerTime = value;
+			case 1 -> setRedstonePowered(value == 1);
+			case 2 -> powerLevel = value;
+			case 3 -> checkCache = value == 1;
 			}
 		}
 

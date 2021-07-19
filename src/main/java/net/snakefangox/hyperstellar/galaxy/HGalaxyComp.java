@@ -1,16 +1,17 @@
 package net.snakefangox.hyperstellar.galaxy;
 
+import java.util.stream.Stream;
+
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.ServerTickingComponent;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.stream.Stream;
 
 public interface HGalaxyComp extends Component, ServerTickingComponent, AutoSyncedComponent {
 

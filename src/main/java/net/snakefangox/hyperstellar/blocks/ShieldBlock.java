@@ -1,15 +1,17 @@
 package net.snakefangox.hyperstellar.blocks;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
+import net.snakefangox.hyperstellar.ships.ShipData;
+import net.snakefangox.hyperstellar.ships.ShipPropertyProvider;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.Material;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.Direction;
-import net.snakefangox.hyperstellar.ships.ShipData;
-import net.snakefangox.hyperstellar.ships.ShipPropertyProvider;
+
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 public class ShieldBlock extends Block implements ShipPropertyProvider {
 	private final double shieldIntegrity;
@@ -25,10 +27,12 @@ public class ShieldBlock extends Block implements ShipPropertyProvider {
 
 	@Override
 	public double rawPropChange(String propName, BlockState state, Direction forwards) {
-		if (propName.equals(ShipData.SHIELD_INTEGRITY) || propName.equals(ShipData.MAX_SHIELD_INTEGRITY))
+		if (propName.equals(ShipData.SHIELD_INTEGRITY) || propName.equals(ShipData.MAX_SHIELD_INTEGRITY)) {
 			return shieldIntegrity;
-		if (propName.equals(ShipData.SHIELD_RECHARGE))
+		}
+		if (propName.equals(ShipData.SHIELD_RECHARGE)) {
 			return shieldRecharge;
+		}
 		return 0;
 	}
 }

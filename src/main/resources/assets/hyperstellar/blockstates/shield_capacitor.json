@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "hyperstellar:block/shield_capacitor" }
+    "": {
+      "model": "hyperstellar:block/shield_capacitor"
+    }
   }
 }

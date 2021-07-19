@@ -1,7 +1,11 @@
 package net.snakefangox.hyperstellar.world_gen;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
@@ -12,9 +16,6 @@ import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 public class OrbitGenerator extends ChunkGenerator {
 	public static final Codec<OrbitGenerator> CODEC = RecordCodecBuilder.create((instance) ->

@@ -1,29 +1,25 @@
 package net.snakefangox.hyperstellar.screens;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
-import io.github.cottonmc.cotton.gui.impl.LibGuiCommon;
 import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WTextField;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.snakefangox.hyperstellar.blocks.entities.ShipNameplateBE;
+import net.snakefangox.hyperstellar.register.HScreens;
+import net.snakefangox.hyperstellar.register.HServerPackets;
+
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.snakefangox.hyperstellar.blocks.entities.ShipNameplateBE;
-import net.snakefangox.hyperstellar.blocks.entities.ShipyardControllerBE;
-import net.snakefangox.hyperstellar.register.HScreens;
-import net.snakefangox.hyperstellar.register.HServerPackets;
-import net.snakefangox.hyperstellar.screens.widgets.WDynamicText;
+
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 
 public class ShipNameplateScreen extends SyncedGuiDescription implements DataScreen {
 	private final BlockPos pos;

@@ -1,8 +1,19 @@
 {
   "variants": {
-    "facing=north": { "model": "hyperstellar:block/ship_nameplate" },
-    "facing=south": { "model": "hyperstellar:block/ship_nameplate", "y": 180 },
-    "facing=west": { "model": "hyperstellar:block/ship_nameplate", "y": 270 },
-    "facing=east": { "model": "hyperstellar:block/ship_nameplate", "y": 90 }
+    "facing=north": {
+      "model": "hyperstellar:block/ship_nameplate"
+    },
+    "facing=south": {
+      "model": "hyperstellar:block/ship_nameplate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hyperstellar:block/ship_nameplate",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "hyperstellar:block/ship_nameplate",
+      "y": 90
+    }
   }
 }

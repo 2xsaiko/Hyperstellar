@@ -1,8 +1,22 @@
 package net.snakefangox.hyperstellar.blocks.entities;
 
+import java.util.ArrayDeque;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.Set;
+
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.snakefangox.hyperstellar.blocks.ShipyardBase;
+import net.snakefangox.hyperstellar.register.HBlocks;
+import net.snakefangox.hyperstellar.register.HClientPackets;
+import net.snakefangox.hyperstellar.register.HEntities;
+import net.snakefangox.hyperstellar.ships.ShipBuilder;
+import net.snakefangox.hyperstellar.ships.ShipData;
+import net.snakefangox.hyperstellar.ships.ShipEntity;
+import net.snakefangox.worldshell.storage.LocalSpace;
+import net.snakefangox.worldshell.transfer.WorldShellConstructor;
+import net.snakefangox.worldshell.util.WSNbtHelper;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,25 +30,15 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.snakefangox.hyperstellar.blocks.ShipyardBase;
-import net.snakefangox.hyperstellar.register.HBlocks;
-import net.snakefangox.hyperstellar.register.HClientPackets;
-import net.snakefangox.hyperstellar.register.HEntities;
-import net.snakefangox.hyperstellar.ships.ShipBuilder;
-import net.snakefangox.hyperstellar.ships.ShipData;
-import net.snakefangox.hyperstellar.ships.ShipEntity;
-import net.snakefangox.worldshell.storage.LocalSpace;
-import net.snakefangox.worldshell.transfer.WorldShellConstructor;
-import net.snakefangox.worldshell.util.WSNbtHelper;
 
-import java.util.*;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 
 public class ShipyardControllerBE extends BlockEntity implements PropertyDelegateHolder {
 
 	public static final int MAX_YARD_SIZE = 100;
 
 	private State state = State.BOOTED;
-	private BlockBox yard = new BlockBox(pos);
 	private final PropertyDelegate propertyDelegate = new PropertyDelegate() {
 		@Override
 		public int get(int index) {
@@ -51,16 +55,22 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 			return 1;
 		}
 	};
+	private BlockBox yard = new BlockBox(pos);
 
 	public ShipyardControllerBE(BlockPos pos, BlockState state) {
 		super(HEntities.SHIPYARD_CONTROLLER, pos, state);
 	}
 
+	private static boolean isYardSizeValid(BlockBox yardSize) {
+		return yardSize.getBlockCountX() > 0 && yardSize.getBlockCountY() > 0 && yardSize.getBlockCountZ() > 0 &&
+				yardSize.getBlockCountX() <= MAX_YARD_SIZE && yardSize.getBlockCountY() <= MAX_YARD_SIZE && yardSize.getBlockCountZ() <= MAX_YARD_SIZE;
+	}
+
 	public void getCommand(PlayerEntity player, int command) {
 		switch (command) {
-			case 0 -> checkShipyardValid();
-			case 1 -> scanShip(player);
-			case 2 -> tryBuildShip();
+		case 0 -> checkShipyardValid();
+		case 1 -> scanShip(player);
+		case 2 -> tryBuildShip();
 		}
 	}
 
@@ -119,16 +129,12 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 			Iterable<BlockPos> iter = BlockPos.iterate(wholeYard.getMinX(), wholeYard.getMinY(), wholeYard.getMinZ(),
 					wholeYard.getMaxX(), wholeYard.getMaxY(), wholeYard.getMaxZ());
 			for (BlockPos pos : iter) {
-				if (world.getBlockState(pos).isOf(HBlocks.SHIPYARD_BASE))
+				if (world.getBlockState(pos).isOf(HBlocks.SHIPYARD_BASE)) {
 					world.setBlockState(pos, HBlocks.SHIPYARD_BASE.withYardState(ShipyardBase.YardState.INVALID));
+				}
 			}
 			state = State.NOTREADY;
 		}
-	}
-
-	private static boolean isYardSizeValid(BlockBox yardSize) {
-		return yardSize.getBlockCountX() > 0 && yardSize.getBlockCountY() > 0 && yardSize.getBlockCountZ() > 0 &&
-			   yardSize.getBlockCountX() <= MAX_YARD_SIZE && yardSize.getBlockCountY() <= MAX_YARD_SIZE && yardSize.getBlockCountZ() <= MAX_YARD_SIZE;
 	}
 
 	private void scanShip(PlayerEntity player) {
@@ -136,7 +142,8 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 
 		Direction dir = getCachedState().get(Properties.HORIZONTAL_FACING);
 		ShipBuilder shipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
-		shipBuilder.forEachRemaining(blockPos -> {});
+		shipBuilder.forEachRemaining(blockPos -> {
+		});
 		ShipData shipData = shipBuilder.getShipData();
 
 		NbtCompound nbt = new NbtCompound();
@@ -151,7 +158,8 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 
 		Direction dir = getCachedState().get(Properties.HORIZONTAL_FACING);
 		ShipBuilder scanShipBuilder = new ShipBuilder(world, LocalSpace.WORLDSPACE, yard, dir);
-		scanShipBuilder.forEachRemaining(pos1 -> {});
+		scanShipBuilder.forEachRemaining(pos1 -> {
+		});
 
 		if (scanShipBuilder.getCount() <= 1) {
 			state = State.FAILED;
@@ -183,8 +191,9 @@ public class ShipyardControllerBE extends BlockEntity implements PropertyDelegat
 		state = State.values()[nbt.getInt("state")];
 
 		NbtElement yardNbt = nbt.get("yard");
-		if (yardNbt instanceof NbtIntArray)
+		if (yardNbt instanceof NbtIntArray) {
 			yard = WSNbtHelper.blockBoxFromNbt(((NbtIntArray) yardNbt).getIntArray());
+		}
 	}
 
 	@Override

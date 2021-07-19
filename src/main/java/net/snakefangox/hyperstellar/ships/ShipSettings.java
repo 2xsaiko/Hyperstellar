@@ -1,9 +1,9 @@
 package net.snakefangox.hyperstellar.ships;
 
+import java.util.Random;
+
 import net.snakefangox.worldshell.entity.WorldShellSettings;
 import net.snakefangox.worldshell.transfer.RotationSolver;
-
-import java.util.Random;
 
 public class ShipSettings {
 	public static final WorldShellSettings SETTINGS = new WorldShellSettings.Builder(true, false)
@@ -11,14 +11,7 @@ public class ShipSettings {
 				world.breakBlock(pos, true);
 				return existingState;
 			}).setRotationSolver(RotationSolver.CARDINAL).build();
-
-	private static final Random RAND = new Random();
-
-	public static String getRandomShipName() {
-		return NAMES[RAND.nextInt(NAMES.length)];
-	}
-
-	public static final String[] NAMES = new String[]{
+	public static final String[] NAMES = new String[] {
 			"Phoenix",
 			"Gibraltar",
 			"Agememnon",
@@ -70,4 +63,9 @@ public class ShipSettings {
 			"HMS Legacy",
 			"SC Typhoon",
 	};
+	private static final Random RAND = new Random();
+
+	public static String getRandomShipName() {
+		return NAMES[RAND.nextInt(NAMES.length)];
+	}
 }

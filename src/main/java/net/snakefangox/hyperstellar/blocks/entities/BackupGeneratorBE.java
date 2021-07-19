@@ -1,6 +1,10 @@
 package net.snakefangox.hyperstellar.blocks.entities;
 
 import io.github.cottonmc.cotton.gui.PropertyDelegateHolder;
+import net.snakefangox.hyperstellar.register.HEntities;
+import net.snakefangox.hyperstellar.screens.BackupGeneratorScreen;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -11,9 +15,6 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.BlockPos;
-import net.snakefangox.hyperstellar.register.HEntities;
-import net.snakefangox.hyperstellar.screens.BackupGeneratorScreen;
-import org.jetbrains.annotations.Nullable;
 
 public class BackupGeneratorBE extends AbstractGeneratorBE implements PropertyDelegateHolder {
 	public static final Text TITLE = new TranslatableText("hyperstellar.container.backup_generator");
@@ -25,8 +26,9 @@ public class BackupGeneratorBE extends AbstractGeneratorBE implements PropertyDe
 	private final PropertyDelegate propertyDelegate = new PropertyDelegate() {
 		@Override
 		public int get(int index) {
-			if (index == 0)
+			if (index == 0) {
 				return powerTime;
+			}
 			return isRedstonePowered() ? 1 : 0;
 		}
 

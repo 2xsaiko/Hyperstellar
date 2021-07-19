@@ -2,13 +2,12 @@ package net.snakefangox.hyperstellar.player;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.snakefangox.hyperstellar.galaxy.Sector;
 import net.snakefangox.hyperstellar.galaxy.SectorPos;
 import net.snakefangox.hyperstellar.register.HComponents;
 
-import java.util.function.Predicate;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 
 public interface HPlayerDataComp extends Component, AutoSyncedComponent {
 
@@ -48,16 +47,18 @@ public interface HPlayerDataComp extends Component, AutoSyncedComponent {
 
 	default boolean knowsSector(Sector sector) {
 		int sectorIndex = sector.getPos().getIndex();
-		for (var s : getKnownSectorIndexes())
+		for (var s : getKnownSectorIndexes()) {
 			if (s == sectorIndex) return true;
+		}
 		return false;
 	}
 
 	@Override
 	default void readFromNbt(NbtCompound nbt) {
 		var skillArr = nbt.getByteArray("skills");
-		for (int i = 0; i < skillArr.length; i++)
+		for (int i = 0; i < skillArr.length; i++) {
 			getPlayerSkills()[i] = skillArr[i];
+		}
 	}
 
 	@Override

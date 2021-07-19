@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "hyperstellar:block/fusion_reactor_coil" }
+    "": {
+      "model": "hyperstellar:block/fusion_reactor_coil"
+    }
   }
 }

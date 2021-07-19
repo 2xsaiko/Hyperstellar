@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "hyperstellar:block/tritanium_block" }
+    "": {
+      "model": "hyperstellar:block/tritanium_block"
+    }
   }
 }

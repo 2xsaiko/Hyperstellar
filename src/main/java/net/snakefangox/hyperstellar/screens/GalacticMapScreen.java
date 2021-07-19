@@ -1,18 +1,22 @@
 package net.snakefangox.hyperstellar.screens;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.*;
+import io.github.cottonmc.cotton.gui.widget.WButton;
+import io.github.cottonmc.cotton.gui.widget.WCardPanel;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.WItemSlot;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.text.LiteralText;
 import net.snakefangox.hyperstellar.galaxy.HGalaxyComp;
 import net.snakefangox.hyperstellar.player.HPlayerDataComp;
 import net.snakefangox.hyperstellar.register.HComponents;
 import net.snakefangox.hyperstellar.register.HScreens;
 import net.snakefangox.hyperstellar.screens.widgets.WGalaxyPanel;
 import net.snakefangox.hyperstellar.screens.widgets.WSectorInfo;
+
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.text.LiteralText;
 
 public class GalacticMapScreen extends SyncedGuiDescription {
 	public GalacticMapScreen(int syncId, PlayerInventory playerInventory, ScreenHandlerContext ctx) {

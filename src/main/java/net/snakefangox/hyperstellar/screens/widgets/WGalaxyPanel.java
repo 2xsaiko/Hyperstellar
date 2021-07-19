@@ -1,21 +1,23 @@
 package net.snakefangox.hyperstellar.screens.widgets;
 
+import java.util.function.BiConsumer;
+
 import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
 import io.github.cottonmc.cotton.gui.client.Scissors;
 import io.github.cottonmc.cotton.gui.widget.WPanel;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.MathHelper;
 import net.snakefangox.hyperstellar.galaxy.Galaxy;
 import net.snakefangox.hyperstellar.galaxy.HGalaxyComp;
 import net.snakefangox.hyperstellar.galaxy.Sector;
 import net.snakefangox.hyperstellar.galaxy.SectorPos;
 import net.snakefangox.hyperstellar.player.HPlayerDataComp;
 
-import java.util.function.BiConsumer;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.MathHelper;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class WGalaxyPanel extends WPanel {
 

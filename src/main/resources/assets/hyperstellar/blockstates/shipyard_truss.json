@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "hyperstellar:block/shipyard_truss" }
+    "": {
+      "model": "hyperstellar:block/shipyard_truss"
+    }
   }
 }

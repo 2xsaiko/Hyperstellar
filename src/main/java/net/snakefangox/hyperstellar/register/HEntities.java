@@ -1,11 +1,18 @@
 package net.snakefangox.hyperstellar.register;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.entity.BlockEntityType;
-import net.snakefangox.hyperstellar.blocks.entities.*;
+import net.snakefangox.hyperstellar.blocks.entities.BackupGeneratorBE;
+import net.snakefangox.hyperstellar.blocks.entities.EnergyConduitBE;
+import net.snakefangox.hyperstellar.blocks.entities.FusionGeneratorBE;
+import net.snakefangox.hyperstellar.blocks.entities.GalacticMapBE;
+import net.snakefangox.hyperstellar.blocks.entities.ShipNameplateBE;
+import net.snakefangox.hyperstellar.blocks.entities.ShipyardControllerBE;
 import net.snakefangox.hyperstellar.ships.ShipEntity;
 import net.snakefangox.rapidregister.annotations.RegisterContents;
 import net.snakefangox.worldshell.entity.WorldShellEntityType;
+
+import net.minecraft.block.entity.BlockEntityType;
+
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 
 @RegisterContents
 public class HEntities {

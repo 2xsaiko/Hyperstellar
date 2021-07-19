@@ -1,32 +1,16 @@
 package net.snakefangox.hyperstellar.screens;
 
 import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
-import io.github.cottonmc.cotton.gui.client.BackgroundPainter;
-import io.github.cottonmc.cotton.gui.impl.LibGuiCommon;
-import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
-import io.github.cottonmc.cotton.gui.widget.WScrollPanel;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
-import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.ScreenHandlerContext;
-import net.minecraft.text.BaseText;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.snakefangox.hyperstellar.blocks.entities.ShipyardControllerBE;
 import net.snakefangox.hyperstellar.register.HScreens;
-import net.snakefangox.hyperstellar.screens.widgets.WDynamicText;
+
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.util.Formatting;
 
 public class BackupGeneratorScreen extends SyncedGuiDescription {
 

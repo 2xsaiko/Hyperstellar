@@ -1,11 +1,25 @@
 {
   "variants": {
     "": [
-      { "model": "hyperstellar:block/asteroid_rock" },
-      { "model": "hyperstellar:block/asteroid_rock", "x": 180 },
-      { "model": "hyperstellar:block/asteroid_rock", "x": 90 },
-      { "model": "hyperstellar:block/asteroid_rock", "y": 180 },
-      { "model": "hyperstellar:block/asteroid_rock", "y": 90 }
+      {
+        "model": "hyperstellar:block/asteroid_rock"
+      },
+      {
+        "model": "hyperstellar:block/asteroid_rock",
+        "x": 180
+      },
+      {
+        "model": "hyperstellar:block/asteroid_rock",
+        "x": 90
+      },
+      {
+        "model": "hyperstellar:block/asteroid_rock",
+        "y": 180
+      },
+      {
+        "model": "hyperstellar:block/asteroid_rock",
+        "y": 90
+      }
     ]
   }
 }

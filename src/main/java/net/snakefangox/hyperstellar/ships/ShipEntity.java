@@ -1,19 +1,9 @@
 package net.snakefangox.hyperstellar.ships;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.snakefangox.hyperstellar.mixin.AccessDataTracker;
 import net.snakefangox.worldshell.WSNetworking;
 import net.snakefangox.worldshell.entity.WorldShellEntity;
@@ -21,7 +11,17 @@ import net.snakefangox.worldshell.math.Quaternion;
 import net.snakefangox.worldshell.math.Vector3d;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 public class ShipEntity extends WorldShellEntity {
 
@@ -56,8 +56,9 @@ public class ShipEntity extends WorldShellEntity {
 		Entity captain = getPrimaryPassenger();
 		if (captain != null) {
 			Quaternion captainLook = new Quaternion().fromAngles(0, -Math.toRadians(captain.getYaw()) + Math.PI, 0);
-			if (Math.abs(getTargetRotation().dot(captainLook)) != 1d)
+			if (Math.abs(getTargetRotation().dot(captainLook)) != 1d) {
 				setTargetRotation(captainLook);
+			}
 		}
 
 		Quaternion rot = getRotation();
@@ -96,9 +97,10 @@ public class ShipEntity extends WorldShellEntity {
 	@Nullable
 	@Override
 	public Entity getPrimaryPassenger() {
-		for (var passenger : getPassengerList())
+		for (var passenger : getPassengerList()) {
 			if (isCaptain(passenger)) return passenger;
-			return null;
+		}
+		return null;
 	}
 
 	private boolean isCaptain(Entity passenger) {
@@ -168,12 +170,12 @@ public class ShipEntity extends WorldShellEntity {
 		return (float) Math.toDegrees(getRotation().getPitch());
 	}
 
-	protected void setShipData(ShipData shipData) {
-		getDataTracker().set(SHIP_DATA, shipData);
-	}
-
 	public ShipData getShipData() {
 		return getDataTracker().get(SHIP_DATA);
+	}
+
+	protected void setShipData(ShipData shipData) {
+		getDataTracker().set(SHIP_DATA, shipData);
 	}
 
 	private void refreshShipData() {
@@ -190,12 +192,12 @@ public class ShipEntity extends WorldShellEntity {
 		((AccessDataTracker) getDataTracker()).setDirty(true);
 	}
 
-	protected void setTargetRotation(Quaternion targetRotation) {
-		getDataTracker().set(TARGET_ROTATION, targetRotation);
-	}
-
 	public Quaternion getTargetRotation() {
 		return getDataTracker().get(TARGET_ROTATION);
+	}
+
+	protected void setTargetRotation(Quaternion targetRotation) {
+		getDataTracker().set(TARGET_ROTATION, targetRotation);
 	}
 
 	@Override
@@ -204,8 +206,9 @@ public class ShipEntity extends WorldShellEntity {
 		setShipData(new ShipData(tag.getCompound("shipData")));
 		NbtCompound seatTag = tag.getCompound("seats");
 		var passengerSeats = getPassengerSeats();
-		for (var key : seatTag.getKeys())
+		for (var key : seatTag.getKeys()) {
 			passengerSeats.put(UUID.fromString(key), seatTag.getInt(key));
+		}
 	}
 
 	@Override
@@ -214,8 +217,9 @@ public class ShipEntity extends WorldShellEntity {
 		tag.put("shipData", getShipData().toNbt());
 		var seatTag = new NbtCompound();
 		var passengerSeats = getPassengerSeats();
-		for (var entry : passengerSeats.entrySet())
+		for (var entry : passengerSeats.entrySet()) {
 			seatTag.putInt(entry.getKey().toString(), entry.getValue());
+		}
 		tag.put("seats", seatTag);
 	}
 }

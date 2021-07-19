@@ -1,7 +1,13 @@
 package net.snakefangox.hyperstellar.galaxy;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.function.Consumer;
+
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.util.WordMarkovChain;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
@@ -10,18 +16,22 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
-import net.snakefangox.hyperstellar.Hyperstellar;
-import net.snakefangox.hyperstellar.util.WordMarkovChain;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.function.Consumer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class Sector {
 
 	public static final RegistryKey<DimensionType> SECTOR_TYPE = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, new Identifier(Hyperstellar.MODID, "space"));
 	public static final WordMarkovChain NAME_GEN;
+
+	static {
+		NAME_GEN = new WordMarkovChain("Ichnaea Ara Anadeia Carina Perseus Perileos Nebula Seashell Cloud Shield " +
+				"Crux Aurigae Lambda Amphiaraus Centaurus Serpent Hurricane Argon Archon Timis " +
+				"Perileos Galaxy Apus Majoris Lyra Eridani Sagitta Peleus Theta Solymus Corona " +
+				"Nemesis Phoroneus Nebula Pavo Nemesis Miriandynus Canis Phoroneus Crux Myrmidon " +
+				"Corona Kentaurus Aquila Euthenia Zephyrus Nebula");
+	}
 
 	private final SectorPos pos;
 	private final Consumer<CelestialBody> registerBody;
@@ -46,8 +56,9 @@ public class Sector {
 
 		sectorSpace = new GalaxyDim(key, ops);
 
-		if (!isEmpty)
+		if (!isEmpty) {
 			systemCenter = new CelestialBody(0, name, new HashSet<>(), this, null, random, linkWorld, server);
+		}
 
 		loadWorld(server);
 		generated = true;
@@ -92,8 +103,9 @@ public class Sector {
 	}
 
 	public RegistryKey<World> getOrbitOrSelfAtPos(double x, double y) {
-		if (systemCenter != null)
+		if (systemCenter != null) {
 			return systemCenter.getOrbitAt(x, y).orElse(sectorSpace.getWorldKey());
+		}
 		return sectorSpace.getWorldKey();
 	}
 
@@ -121,13 +133,5 @@ public class Sector {
 
 	public SectorPos getPos() {
 		return pos;
-	}
-
-	static {
-		NAME_GEN = new WordMarkovChain("Ichnaea Ara Anadeia Carina Perseus Perileos Nebula Seashell Cloud Shield " +
-									   "Crux Aurigae Lambda Amphiaraus Centaurus Serpent Hurricane Argon Archon Timis " +
-									   "Perileos Galaxy Apus Majoris Lyra Eridani Sagitta Peleus Theta Solymus Corona " +
-									   "Nemesis Phoroneus Nebula Pavo Nemesis Miriandynus Canis Phoroneus Crux Myrmidon " +
-									   "Corona Kentaurus Aquila Euthenia Zephyrus Nebula");
 	}
 }

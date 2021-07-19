@@ -1,8 +1,16 @@
 package net.snakefangox.hyperstellar.blocks;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.*;
+import net.snakefangox.hyperstellar.register.HEntities;
+import net.snakefangox.hyperstellar.screens.ShipNameplateScreen;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -18,15 +26,14 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.snakefangox.hyperstellar.register.HEntities;
-import net.snakefangox.hyperstellar.screens.ShipNameplateScreen;
-import org.jetbrains.annotations.Nullable;
+
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 public class ShipNameplate extends HorizontalFacingBlock implements BlockEntityProvider {
 	public static final Text TITLE = new TranslatableText("hyperstellar.container.ship_nameplate");
@@ -65,17 +72,17 @@ public class ShipNameplate extends HorizontalFacingBlock implements BlockEntityP
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
 		switch (state.get(Properties.HORIZONTAL_FACING)) {
-			case EAST:
-				return BOX_E;
+		case EAST:
+			return BOX_E;
 
-			case NORTH:
-				return BOX_N;
+		case NORTH:
+			return BOX_N;
 
-			case SOUTH:
-				return BOX_S;
+		case SOUTH:
+			return BOX_S;
 
-			case WEST:
-				return BOX_W;
+		case WEST:
+			return BOX_W;
 		}
 		return BOX_N;
 	}

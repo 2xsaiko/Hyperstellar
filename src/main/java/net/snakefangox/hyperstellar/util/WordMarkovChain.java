@@ -30,8 +30,9 @@ public class WordMarkovChain {
 				int lastChIdx = generated.charAt(i - 1) - ASCII_OFFSET;
 				double weight = random.nextDouble();
 
-				while (weight > 0)
+				while (weight > 0) {
 					weight -= charProbabilities[lastChIdx][idx++];
+				}
 
 				idx -= 1;
 			}
@@ -59,18 +60,21 @@ public class WordMarkovChain {
 		for (int i = 0; i < CHAR_COUNT; i++) {
 			double mag = 0;
 
-			for (int k = 0; k < CHAR_COUNT; k++)
+			for (int k = 0; k < CHAR_COUNT; k++) {
 				mag += Math.pow(charProbabilities[i][k], 2);
+			}
 
 			mag = 1d / Math.sqrt(mag);
 
 			if (Double.isFinite(mag)) {
-				for (int k = 0; k < CHAR_COUNT; k++)
+				for (int k = 0; k < CHAR_COUNT; k++) {
 					charProbabilities[i][k] *= mag;
+				}
 			} else {
 				mag = 1d / (CHAR_COUNT - 1);
-				for (int k = 1; k < CHAR_COUNT; k++)
+				for (int k = 1; k < CHAR_COUNT; k++) {
 					charProbabilities[i][k] += mag;
+				}
 			}
 		}
 	}

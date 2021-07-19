@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "hyperstellar:block/shield_generator" }
+    "": {
+      "model": "hyperstellar:block/shield_generator"
+    }
   }
 }

@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "AccessDataTracker",
-    "MixinEntity",
-    "AccessTeleportCommand"
+    "AccessTeleportCommand",
+    "MixinEntity"
   ],
   "client": [
     "AccessSkyProperties",

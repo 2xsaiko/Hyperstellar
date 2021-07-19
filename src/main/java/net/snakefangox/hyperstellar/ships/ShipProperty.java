@@ -5,9 +5,9 @@ import java.util.List;
 
 public class ShipProperty {
 	private final String name;
+	private final List<ShipModifier.Modifier> modifiers = new ArrayList<>();
 	private double rawValue;
 	private double value;
-	private final List<ShipModifier.Modifier> modifiers = new ArrayList<>();
 
 	public ShipProperty(String name, double rawValue) {
 		this.name = name;
@@ -22,15 +22,17 @@ public class ShipProperty {
 	}
 
 	public void removeModifier(ShipModifier.Modifier modifier) {
-		if (modifiers.remove(modifier))
+		if (modifiers.remove(modifier)) {
 			reCalcValue();
+		}
 	}
 
 	private void reCalcValue() {
 		modifiers.sort(null);
 		value = rawValue;
-		for (ShipModifier.Modifier mod : modifiers)
+		for (ShipModifier.Modifier mod : modifiers) {
 			value = mod.op().apply(value, mod.mod());
+		}
 		value = Math.max(0, value);
 	}
 
@@ -42,13 +44,13 @@ public class ShipProperty {
 		return rawValue;
 	}
 
-	public double get() {
-		return value;
-	}
-
 	public void setRawValue(double rawValue) {
 		rawValue = Math.max(0, rawValue);
 		this.rawValue = rawValue;
 		reCalcValue();
+	}
+
+	public double get() {
+		return value;
 	}
 }

@@ -3,12 +3,14 @@ package net.snakefangox.hyperstellar.screens.widgets;
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.client.util.math.MatrixStack;
 import net.snakefangox.hyperstellar.galaxy.Sector;
 import net.snakefangox.hyperstellar.galaxy.SectorPos;
+
+import net.minecraft.client.resource.language.I18n;
+import net.minecraft.client.util.math.MatrixStack;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class WSectorInfo extends WWidget {
 

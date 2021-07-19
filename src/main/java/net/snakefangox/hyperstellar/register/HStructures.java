@@ -1,8 +1,8 @@
 package net.snakefangox.hyperstellar.register;
 
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.structures.ShipyardStructure;
+
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -12,8 +12,10 @@ import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
-import net.snakefangox.hyperstellar.Hyperstellar;
-import net.snakefangox.hyperstellar.structures.ShipyardStructure;
+
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 
 public class HStructures {
 	public static final StructurePieceType SHIPYARD_PIECE = ShipyardStructure.ShipyardPiece::new;

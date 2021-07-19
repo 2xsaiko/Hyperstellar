@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "hyperstellar:block/energy_conduit" }
+    "": {
+      "model": "hyperstellar:block/energy_conduit"
+    }
   }
 }

@@ -1,8 +1,8 @@
 package net.snakefangox.hyperstellar.player;
 
-import net.minecraft.entity.player.PlayerEntity;
-
 import java.util.Arrays;
+
+import net.minecraft.entity.player.PlayerEntity;
 
 public class HPlayerData implements HPlayerDataComp {
 

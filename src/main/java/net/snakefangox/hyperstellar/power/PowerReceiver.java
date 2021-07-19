@@ -6,6 +6,8 @@ import net.minecraft.world.World;
 
 public interface PowerReceiver {
 	int maxPowerNeeded(World world, BlockState state, BlockPos pos);
+
 	void providePower(World world, BlockState state, BlockPos pos, int amount);
+
 	void setEnabled(World world, BlockState state, BlockPos pos, boolean enable);
 }

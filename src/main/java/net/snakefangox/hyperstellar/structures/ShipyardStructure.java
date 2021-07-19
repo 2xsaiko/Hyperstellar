@@ -1,9 +1,16 @@
 package net.snakefangox.hyperstellar.structures;
 
+import java.util.Random;
+
 import com.mojang.serialization.Codec;
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.register.HStructures;
+
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.structure.*;
+import net.minecraft.structure.StructureManager;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.structure.StructureStart;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockBox;
@@ -17,10 +24,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
-import net.snakefangox.hyperstellar.Hyperstellar;
-import net.snakefangox.hyperstellar.register.HStructures;
-
-import java.util.Random;
 
 public class ShipyardStructure extends StructureFeature<DefaultFeatureConfig> {
 	public ShipyardStructure(Codec<DefaultFeatureConfig> codec) {

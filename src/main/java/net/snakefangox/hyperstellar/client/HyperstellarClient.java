@@ -1,15 +1,6 @@
 package net.snakefangox.hyperstellar.client;
 
 import io.github.cottonmc.cotton.gui.client.CottonInventoryScreen;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
-import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.util.Identifier;
 import net.snakefangox.hyperstellar.Hyperstellar;
 import net.snakefangox.hyperstellar.client.render.ShipNameplateBER;
 import net.snakefangox.hyperstellar.client.render.ShipRenderer;
@@ -18,7 +9,22 @@ import net.snakefangox.hyperstellar.mixin.AccessSkyProperties;
 import net.snakefangox.hyperstellar.register.HBlocks;
 import net.snakefangox.hyperstellar.register.HEntities;
 import net.snakefangox.hyperstellar.register.HScreens;
-import net.snakefangox.hyperstellar.screens.*;
+import net.snakefangox.hyperstellar.screens.BackupGeneratorScreen;
+import net.snakefangox.hyperstellar.screens.FusionGeneratorScreen;
+import net.snakefangox.hyperstellar.screens.GalacticMapScreen;
+import net.snakefangox.hyperstellar.screens.ShipNameplateScreen;
+import net.snakefangox.hyperstellar.screens.ShipyardScreen;
+
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.util.Identifier;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.BlockEntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendereregistry.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 
 @Environment(EnvType.CLIENT)
 public class HyperstellarClient implements ClientModInitializer {

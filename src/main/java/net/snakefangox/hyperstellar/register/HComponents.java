@@ -5,12 +5,13 @@ import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import dev.onyxstudios.cca.api.v3.scoreboard.ScoreboardComponentFactoryRegistry;
-import net.minecraft.util.Identifier;
 import net.snakefangox.hyperstellar.Hyperstellar;
 import net.snakefangox.hyperstellar.galaxy.Galaxy;
 import net.snakefangox.hyperstellar.galaxy.HGalaxyComp;
 import net.snakefangox.hyperstellar.player.HPlayerData;
 import net.snakefangox.hyperstellar.player.HPlayerDataComp;
+
+import net.minecraft.util.Identifier;
 
 public class HComponents {
 

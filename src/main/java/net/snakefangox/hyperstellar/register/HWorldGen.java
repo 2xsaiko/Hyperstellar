@@ -1,12 +1,13 @@
 package net.snakefangox.hyperstellar.register;
 
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.world_gen.OrbitGenerator;
+import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
+
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
-import net.snakefangox.hyperstellar.Hyperstellar;
-import net.snakefangox.hyperstellar.world_gen.OrbitGenerator;
-import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
 
 public class HWorldGen {
 

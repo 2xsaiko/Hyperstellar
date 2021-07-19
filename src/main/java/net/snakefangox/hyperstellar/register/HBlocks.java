@@ -1,16 +1,26 @@
 package net.snakefangox.hyperstellar.register;
 
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.MapColor;
-import net.minecraft.block.Material;
-import net.minecraft.sound.BlockSoundGroup;
-import net.snakefangox.hyperstellar.blocks.*;
+import net.snakefangox.hyperstellar.blocks.EnergyConduit;
+import net.snakefangox.hyperstellar.blocks.GalacticMap;
+import net.snakefangox.hyperstellar.blocks.PowerGenerator;
+import net.snakefangox.hyperstellar.blocks.SeatBlock;
+import net.snakefangox.hyperstellar.blocks.ShieldBlock;
+import net.snakefangox.hyperstellar.blocks.ShipNameplate;
+import net.snakefangox.hyperstellar.blocks.ShipyardBase;
+import net.snakefangox.hyperstellar.blocks.ShipyardController;
+import net.snakefangox.hyperstellar.blocks.Thruster;
 import net.snakefangox.hyperstellar.blocks.entities.BackupGeneratorBE;
 import net.snakefangox.hyperstellar.blocks.entities.FusionGeneratorBE;
 import net.snakefangox.rapidregister.annotations.BlockMeta;
 import net.snakefangox.rapidregister.annotations.RegisterContents;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
+import net.minecraft.sound.BlockSoundGroup;
+
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tool.attribute.v1.FabricToolTags;
 
 @RegisterContents(defaultBlockMeta = @BlockMeta(blockItemGroup = "hyperstellar:general"))
 public class HBlocks {

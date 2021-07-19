@@ -1,11 +1,11 @@
 package net.snakefangox.hyperstellar.ships;
 
-import net.minecraft.entity.data.TrackedDataHandler;
-import net.minecraft.network.PacketByteBuf;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import net.minecraft.entity.data.TrackedDataHandler;
+import net.minecraft.network.PacketByteBuf;
 
 public class ShipDatatrackers {
 	public static final TrackedDataHandler<Map<UUID, Integer>> PASSENGER_MAP = new TrackedDataHandler<>() {

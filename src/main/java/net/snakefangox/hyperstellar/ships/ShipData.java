@@ -1,14 +1,15 @@
 package net.snakefangox.hyperstellar.ships;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.snakefangox.hyperstellar.blocks.SeatBlock;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import net.snakefangox.hyperstellar.blocks.SeatBlock;
+
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 
 public class ShipData {
 
@@ -25,13 +26,18 @@ public class ShipData {
 	public static final String VERT_THRUST = "vertical_thrust";
 	public static final String[] ALL_SHIP_PROPS;
 
-	private String shipName;
-	private Direction forward;
+	static {
+		ALL_SHIP_PROPS = new String[] {HULL_INTEGRITY, MAX_HULL_INTEGRITY, SHIELD_INTEGRITY, MAX_SHIELD_INTEGRITY, SHIELD_RECHARGE,
+				POWER, POWER_CONSUMPTION, TONNAGE, FORWARD_THRUST, SIDE_THRUST, VERT_THRUST};
+	}
+
 	private final ShipProperties properties;
 	private final List<BlockPos> seatOffsets = new ArrayList<>();
 	private final List<BlockPos> thrusterOffsetF = new ArrayList<>();
 	private final List<BlockPos> thrusterOffsetS = new ArrayList<>();
 	private final List<BlockPos> thrusterOffsetV = new ArrayList<>();
+	private String shipName;
+	private Direction forward;
 
 	public ShipData() {
 		this.shipName = ShipSettings.getRandomShipName();
@@ -53,6 +59,28 @@ public class ShipData {
 		fromNbt(nbt);
 	}
 
+	private static String toReadable(String s) {
+		return toTitleCase(s.replace("_", " "));
+	}
+
+	private static String toTitleCase(String input) {
+		StringBuilder titleCase = new StringBuilder(input.length());
+		boolean nextTitleCase = true;
+
+		for (char c : input.toCharArray()) {
+			if (Character.isSpaceChar(c)) {
+				nextTitleCase = true;
+			} else if (nextTitleCase) {
+				c = Character.toTitleCase(c);
+				nextTitleCase = false;
+			}
+
+			titleCase.append(c);
+		}
+
+		return titleCase.toString();
+	}
+
 	public void validateProperties() {
 		limitProperty(HULL_INTEGRITY, MAX_HULL_INTEGRITY);
 		limitProperty(SHIELD_INTEGRITY, MAX_SHIELD_INTEGRITY);
@@ -61,8 +89,9 @@ public class ShipData {
 	private void limitProperty(String val, String max) {
 		double amount = getRaw(val);
 		double limit = get(max);
-		if (amount > limit)
+		if (amount > limit) {
 			properties.getProperty(HULL_INTEGRITY).setRawValue(limit);
+		}
 	}
 
 	private double getRaw(String propertyName) {
@@ -156,62 +185,44 @@ public class ShipData {
 	public String shipReport() {
 		StringBuilder report = new StringBuilder();
 
-		if (get(TONNAGE) <= 0)
+		if (get(TONNAGE) <= 0) {
 			return report.append("Ship does not seem to exist\nCheck for theft").toString();
+		}
 
 		report.append("Ship Name: ").append(shipName).append('\n');
 
-		for (var prop : ALL_SHIP_PROPS)
+		for (var prop : ALL_SHIP_PROPS) {
 			report.append(toReadable(prop)).append(": ").append(get(prop)).append('\n');
-
-		if (seatOffsets.isEmpty())
-			report.append("Ship has no control seats\n");
-
-		if (get(VERT_THRUST) <= 0 || get(FORWARD_THRUST) <= 0 || get(SIDE_THRUST) <= 0)
-			report.append("Ship has no thrust in one or more axes\nManeuvering will be difficult\n");
-
-		if (get(TONNAGE) >= get(VERT_THRUST))
-			report.append("Ship may be unable to take off in standard gravity\n");
-
-		if (get(TONNAGE) >= get(FORWARD_THRUST) || get(TONNAGE) >= get(SIDE_THRUST))
-			report.append("Ship may be slow to accelerate\n");
-
-		if (get(POWER) <= 0)
-			report.append("Ship is missing power source\n");
-
-		if (get(MAX_SHIELD_INTEGRITY) > 0 && get(SHIELD_RECHARGE) <= 0)
-			report.append("Ship has capacity for shields but no way to charge them\n");
-
-		if (get(MAX_SHIELD_INTEGRITY) <= 0 && get(SHIELD_RECHARGE) > 0)
-			report.append("Ship has shield recharge but no capacity\n");
-
-		return report.toString();
-	}
-
-	private static String toReadable(String s) {
-		return toTitleCase(s.replace("_", " "));
-	}
-
-	private static String toTitleCase(String input) {
-		StringBuilder titleCase = new StringBuilder(input.length());
-		boolean nextTitleCase = true;
-
-		for (char c : input.toCharArray()) {
-			if (Character.isSpaceChar(c)) {
-				nextTitleCase = true;
-			} else if (nextTitleCase) {
-				c = Character.toTitleCase(c);
-				nextTitleCase = false;
-			}
-
-			titleCase.append(c);
 		}
 
-		return titleCase.toString();
-	}
+		if (seatOffsets.isEmpty()) {
+			report.append("Ship has no control seats\n");
+		}
 
-	static {
-		ALL_SHIP_PROPS = new String[]{HULL_INTEGRITY, MAX_HULL_INTEGRITY, SHIELD_INTEGRITY, MAX_SHIELD_INTEGRITY, SHIELD_RECHARGE,
-				POWER, POWER_CONSUMPTION, TONNAGE, FORWARD_THRUST, SIDE_THRUST, VERT_THRUST};
+		if (get(VERT_THRUST) <= 0 || get(FORWARD_THRUST) <= 0 || get(SIDE_THRUST) <= 0) {
+			report.append("Ship has no thrust in one or more axes\nManeuvering will be difficult\n");
+		}
+
+		if (get(TONNAGE) >= get(VERT_THRUST)) {
+			report.append("Ship may be unable to take off in standard gravity\n");
+		}
+
+		if (get(TONNAGE) >= get(FORWARD_THRUST) || get(TONNAGE) >= get(SIDE_THRUST)) {
+			report.append("Ship may be slow to accelerate\n");
+		}
+
+		if (get(POWER) <= 0) {
+			report.append("Ship is missing power source\n");
+		}
+
+		if (get(MAX_SHIELD_INTEGRITY) > 0 && get(SHIELD_RECHARGE) <= 0) {
+			report.append("Ship has capacity for shields but no way to charge them\n");
+		}
+
+		if (get(MAX_SHIELD_INTEGRITY) <= 0 && get(SHIELD_RECHARGE) > 0) {
+			report.append("Ship has shield recharge but no capacity\n");
+		}
+
+		return report.toString();
 	}
 }

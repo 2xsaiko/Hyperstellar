@@ -1,12 +1,17 @@
 package net.snakefangox.hyperstellar.register;
 
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.screens.BackupGeneratorScreen;
+import net.snakefangox.hyperstellar.screens.FusionGeneratorScreen;
+import net.snakefangox.hyperstellar.screens.GalacticMapScreen;
+import net.snakefangox.hyperstellar.screens.ShipNameplateScreen;
+import net.snakefangox.hyperstellar.screens.ShipyardScreen;
+
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
-import net.snakefangox.hyperstellar.Hyperstellar;
-import net.snakefangox.hyperstellar.blocks.entities.FusionGeneratorBE;
-import net.snakefangox.hyperstellar.screens.*;
+
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 
 public class HScreens {
 	public static ScreenHandlerType<ShipyardScreen> SHIPYARD_SCREEN;

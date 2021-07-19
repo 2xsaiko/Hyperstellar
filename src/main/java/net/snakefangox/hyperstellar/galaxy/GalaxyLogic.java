@@ -1,14 +1,16 @@
 package net.snakefangox.hyperstellar.galaxy;
 
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
-import net.minecraft.server.MinecraftServer;
+import java.util.EnumSet;
+
 import net.snakefangox.hyperstellar.mixin.AccessTeleportCommand;
 import net.snakefangox.hyperstellar.register.HComponents;
 import net.snakefangox.worldshell.world.CreateWorldsEvent;
 
-import java.util.EnumSet;
+import net.minecraft.entity.Entity;
+import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.server.MinecraftServer;
+
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 
 public class GalaxyLogic {
 	public static final double SPACE_HEIGHT = 100;

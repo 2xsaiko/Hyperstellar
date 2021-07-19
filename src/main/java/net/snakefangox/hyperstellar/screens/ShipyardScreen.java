@@ -7,7 +7,10 @@ import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WScrollPanel;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
-import net.fabricmc.fabric.api.util.TriState;
+import net.snakefangox.hyperstellar.blocks.entities.ShipyardControllerBE;
+import net.snakefangox.hyperstellar.register.HScreens;
+import net.snakefangox.hyperstellar.screens.widgets.WDynamicText;
+
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,9 +23,8 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.snakefangox.hyperstellar.blocks.entities.ShipyardControllerBE;
-import net.snakefangox.hyperstellar.register.HScreens;
-import net.snakefangox.hyperstellar.screens.widgets.WDynamicText;
+
+import net.fabricmc.fabric.api.util.TriState;
 
 public class ShipyardScreen extends SyncedGuiDescription implements DataScreen {
 	private static final Identifier TERMINAL_TEX = new Identifier(LibGuiCommon.MOD_ID, "textures/widget/panel_dark.png");
@@ -79,8 +81,9 @@ public class ShipyardScreen extends SyncedGuiDescription implements DataScreen {
 
 
 	private BaseText getTerminalText() {
-		if (report != null)
+		if (report != null) {
 			return report;
+		}
 
 		ShipyardControllerBE.State state = ShipyardControllerBE.State.values()[getPropertyDelegate().get(0)];
 		return switch (state) {

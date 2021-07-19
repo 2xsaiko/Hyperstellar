@@ -1,9 +1,14 @@
 package net.snakefangox.hyperstellar.world_gen;
 
+import java.util.Random;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.snakefangox.hyperstellar.register.HBlocks;
+
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ChunkRegion;
@@ -15,11 +20,6 @@ import net.minecraft.world.gen.StructureAccessor;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.StructuresConfig;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
-import net.snakefangox.hyperstellar.register.HBlocks;
-
-import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 public class SpaceGenerator extends ChunkGenerator {
 	public static final Codec<SpaceGenerator> CODEC = RecordCodecBuilder.create((instance) ->

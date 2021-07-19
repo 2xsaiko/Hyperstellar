@@ -23,7 +23,7 @@
       "replace_current_music": true
     }
   },
-    "surface_builder": "minecraft:nope",
+  "surface_builder": "minecraft:nope",
   "carvers": {
     "air": [],
     "liquid": []

@@ -1,7 +1,18 @@
 package net.snakefangox.hyperstellar.galaxy;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.OptionalLong;
+import java.util.Random;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import net.snakefangox.hyperstellar.Hyperstellar;
+import net.snakefangox.hyperstellar.util.WordMarkovChain;
+import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -17,14 +28,9 @@ import net.minecraft.world.biome.source.FixedBiomeSource;
 import net.minecraft.world.dimension.DimensionOptions;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.chunk.StructuresConfig;
-import net.snakefangox.hyperstellar.Hyperstellar;
-import net.snakefangox.hyperstellar.util.WordMarkovChain;
-import net.snakefangox.hyperstellar.world_gen.SpaceGenerator;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class CelestialBody {
 
@@ -32,6 +38,13 @@ public class CelestialBody {
 	public static final double MAX_SPEED = 360d / (20 * 60);
 	public static final RegistryKey<DimensionType> ORBIT_TYPE = RegistryKey.of(Registry.DIMENSION_TYPE_KEY, new Identifier(Hyperstellar.MODID, "orbit"));
 	public static final WordMarkovChain NAME_GEN;
+
+	static {
+		NAME_GEN = new WordMarkovChain("Sun Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto Ceres " +
+				"Pallas Vesta Hygiea Interamnia Europa Davida Sylvia Cybele Eunomia Juno Euphrosyne " +
+				"Hektor Thisbe Bamberga Patientia Herculina Doris Ursula Camilla Eugenia Iris Amphitrite " +
+				"Phobos Amalthea Ganymede Hyperion Titania Dysnomea Atlas Epimetheus Titan Oberon");
+	}
 
 	private final Sector sector;
 	@Nullable
@@ -78,8 +91,9 @@ public class CelestialBody {
 
 			if (orbitingCount > 0) {
 				orbitingBodies = new CelestialBody[orbitingCount];
-				for (int i = 0; i < orbitingCount; i++)
+				for (int i = 0; i < orbitingCount; i++) {
 					orbitingBodies[i] = new CelestialBody(size, sectorName, usedNames, sector, this, random, null, server);
+				}
 			}
 		} else {
 			this.linkedWorld = linkedWorld;
@@ -124,11 +138,13 @@ public class CelestialBody {
 
 	public void tickBody(double time) {
 		orbitAngle += (time * orbitSpeed);
-		if (orbitAngle >= 360d)
+		if (orbitAngle >= 360d) {
 			orbitAngle = orbitAngle - 360d;
+		}
 
-		for (var cBody : orbitingBodies)
+		for (var cBody : orbitingBodies) {
 			cBody.tickBody(time);
+		}
 	}
 
 	public Vec2d getPos() {
@@ -151,8 +167,9 @@ public class CelestialBody {
 		orbit.loadWorld(server);
 		if (body != null) body.loadWorld(server);
 
-		for (var bod : orbitingBodies)
+		for (var bod : orbitingBodies) {
 			bod.recursivelyLoad(server);
+		}
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -190,8 +207,9 @@ public class CelestialBody {
 	@Nullable
 	public RegistryKey<World> getTransferKey(RegistryKey<World> key, boolean isUp) {
 		var bodyKey = getBodyKey();
-		if (key.equals(bodyKey) && isUp)
+		if (key.equals(bodyKey) && isUp) {
 			return orbit.getWorldKey();
+		}
 
 		if (key.equals(orbit.getWorldKey())) {
 			if (isUp) {
@@ -251,12 +269,5 @@ public class CelestialBody {
 		}
 
 		sector.registerBody(this);
-	}
-
-	static {
-		NAME_GEN = new WordMarkovChain("Sun Mercury Venus Earth Mars Jupiter Saturn Uranus Neptune Pluto Ceres " +
-									   "Pallas Vesta Hygiea Interamnia Europa Davida Sylvia Cybele Eunomia Juno Euphrosyne " +
-									   "Hektor Thisbe Bamberga Patientia Herculina Doris Ursula Camilla Eugenia Iris Amphitrite " +
-									   "Phobos Amalthea Ganymede Hyperion Titania Dysnomea Atlas Epimetheus Titan Oberon");
 	}
 }

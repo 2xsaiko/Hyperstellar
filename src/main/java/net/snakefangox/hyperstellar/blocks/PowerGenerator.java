@@ -1,5 +1,10 @@
 package net.snakefangox.hyperstellar.blocks;
 
+import java.util.function.BiFunction;
+
+import net.snakefangox.hyperstellar.blocks.entities.AbstractGeneratorBE;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -19,10 +24,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.snakefangox.hyperstellar.blocks.entities.AbstractGeneratorBE;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.function.BiFunction;
 
 public class PowerGenerator extends HorizontalFacingBlock implements BlockEntityProvider {
 
@@ -70,7 +71,7 @@ public class PowerGenerator extends HorizontalFacingBlock implements BlockEntity
 			BlockEntity entityUnchecked = world.getBlockEntity(pos);
 			if (entityUnchecked instanceof Inventory entity) {
 				ItemScatterer.spawn(world, pos, entity);
-				world.updateComparators(pos,this);
+				world.updateComparators(pos, this);
 			}
 			super.onStateReplaced(state, world, pos, newState, moved);
 		}

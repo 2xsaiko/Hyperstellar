@@ -1,11 +1,13 @@
 package net.snakefangox.hyperstellar.blocks.entities;
 
-import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.snakefangox.hyperstellar.register.HEntities;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
-import net.snakefangox.hyperstellar.register.HEntities;
+
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 
 public class ShipNameplateBE extends BlockEntity implements BlockEntityClientSerializable {
 

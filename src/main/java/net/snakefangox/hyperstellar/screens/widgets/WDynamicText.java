@@ -1,12 +1,14 @@
 package net.snakefangox.hyperstellar.screens.widgets;
 
+import java.util.function.Supplier;
+
 import io.github.cottonmc.cotton.gui.widget.WText;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
-import java.util.function.Supplier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class WDynamicText extends WText {
 	private Supplier<Text> textSupplier;
@@ -24,8 +26,9 @@ public class WDynamicText extends WText {
 	public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
 		if (textSupplier != null) {
 			Text newText = textSupplier.get();
-			if (!newText.equals(text))
+			if (!newText.equals(text)) {
 				setText(newText);
+			}
 		}
 		super.paint(matrices, x, y, mouseX, mouseY);
 	}

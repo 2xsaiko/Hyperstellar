@@ -1,10 +1,11 @@
 package net.snakefangox.hyperstellar.ships;
 
-import net.minecraft.util.Formatting;
-import net.minecraft.util.StringIdentifiable;
+import java.util.function.BiFunction;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.BiFunction;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.StringIdentifiable;
 
 public class ShipModifier {
 

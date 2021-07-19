@@ -1,8 +1,19 @@
 {
   "variants": {
-    "facing=north": { "model": "hyperstellar:block/crew_chair" },
-    "facing=south": { "model": "hyperstellar:block/crew_chair", "y": 180 },
-    "facing=west": { "model": "hyperstellar:block/crew_chair", "y": 270 },
-    "facing=east": { "model": "hyperstellar:block/crew_chair", "y": 90 }
+    "facing=north": {
+      "model": "hyperstellar:block/crew_chair"
+    },
+    "facing=south": {
+      "model": "hyperstellar:block/crew_chair",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hyperstellar:block/crew_chair",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "hyperstellar:block/crew_chair",
+      "y": 90
+    }
   }
 }

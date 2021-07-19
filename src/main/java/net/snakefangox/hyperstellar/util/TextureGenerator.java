@@ -1,27 +1,27 @@
 package net.snakefangox.hyperstellar.util;
 
-import net.minecraft.util.math.Vec2f;
-import net.snakefangox.hyperstellar.galaxy.body_icons.ContinentalPlanetIconGen;
-import net.snakefangox.hyperstellar.galaxy.body_icons.GasGiantIconGen;
-import net.snakefangox.hyperstellar.galaxy.body_icons.StarIconGen;
-import net.snakefangox.hyperstellar.world_gen.OpenSimplexNoise;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
+
+import net.snakefangox.hyperstellar.galaxy.body_icons.GasGiantIconGen;
+import net.snakefangox.hyperstellar.world_gen.OpenSimplexNoise;
+
+import net.minecraft.util.math.Vec2f;
 
 public abstract class TextureGenerator {
 
 	protected final OpenSimplexNoise[] heightNoise;
 	protected final float[][] heightmap;
 	protected final int[][] icon;
-	private final float scale;
 	protected final int size;
 	protected final Vec2f center;
+	private final float scale;
 
 	public TextureGenerator(long seed, int size, float scale) {
-		this.heightNoise = new OpenSimplexNoise[]{new OpenSimplexNoise(seed), new OpenSimplexNoise(seed * 5),
+		this.heightNoise = new OpenSimplexNoise[] {new OpenSimplexNoise(seed), new OpenSimplexNoise(seed * 5),
 				new OpenSimplexNoise(seed * 7), new OpenSimplexNoise(seed * 9)};
 		this.size = size;
 		heightmap = new float[size][size];
@@ -29,6 +29,23 @@ public abstract class TextureGenerator {
 		this.scale = scale;
 		float center = size / 2f;
 		this.center = new Vec2f(center, center);
+	}
+
+	public static void main(String[] args) throws Throwable {
+		BufferedImage toSave = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+
+		var rand = new Random();
+		var icon = new GasGiantIconGen(rand.nextLong(), 32, 0.3f);
+		icon.generate();
+
+		for (int x = 0; x < toSave.getWidth(); x++) {
+			for (int y = 0; y < toSave.getHeight(); y++) {
+				toSave.setRGB(x, y, icon.icon[x][y]);
+			}
+		}
+
+		File outputfile = new File("icon.png");
+		ImageIO.write(toSave, "png", outputfile);
 	}
 
 	public void generate() {
@@ -65,22 +82,5 @@ public abstract class TextureGenerator {
 
 	protected float distFromCenter(int x, int y) {
 		return (float) Math.hypot(x - center.x, y - center.y);
-	}
-
-	public static void main(String[] args) throws Throwable {
-		BufferedImage toSave = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
-
-		var rand = new Random();
-		var icon = new GasGiantIconGen(rand.nextLong(), 32, 0.3f);
-		icon.generate();
-
-		for (int x = 0; x < toSave.getWidth(); x++) {
-			for (int y = 0; y < toSave.getHeight(); y++) {
-				toSave.setRGB(x, y, icon.icon[x][y]);
-			}
-		}
-
-		File outputfile = new File("icon.png");
-		ImageIO.write(toSave, "png", outputfile);
 	}
 }

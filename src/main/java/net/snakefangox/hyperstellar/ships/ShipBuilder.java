@@ -1,22 +1,21 @@
 package net.snakefangox.hyperstellar.ships;
 
-import com.google.common.collect.AbstractIterator;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.CuboidBlockIterator;
-import net.minecraft.util.math.BlockBox;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockView;
+import java.util.Iterator;
+
 import net.snakefangox.hyperstellar.blocks.SeatBlock;
 import net.snakefangox.hyperstellar.blocks.ShipNameplate;
 import net.snakefangox.hyperstellar.blocks.Thruster;
 import net.snakefangox.hyperstellar.blocks.entities.ShipNameplateBE;
 import net.snakefangox.worldshell.storage.LocalSpace;
 
-import java.util.Iterator;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockBox;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.BlockView;
 
 public class ShipBuilder implements Iterator<BlockPos> {
 	public static final double MAX_WEIGHT = 50;
@@ -61,16 +60,20 @@ public class ShipBuilder implements Iterator<BlockPos> {
 		if (block instanceof ShipPropertyProvider) {
 			for (var prop : ShipData.ALL_SHIP_PROPS) {
 				double change = ((ShipPropertyProvider) block).rawPropChange(prop, state, shipData.getForward());
-				if (change != 0)
+				if (change != 0) {
 					shipData.getProperties().addRaw(prop, change);
+				}
 			}
 		} else if (block instanceof ShipNameplate) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof ShipNameplateBE)
+			if (blockEntity instanceof ShipNameplateBE) {
 				shipData.setShipName(((ShipNameplateBE) blockEntity).getName());
+			}
 		}
 
-		if (block instanceof Thruster) shipData.addThruster(state.get(Properties.FACING), space.toLocal(pos.toImmutable()));
+		if (block instanceof Thruster) {
+			shipData.addThruster(state.get(Properties.FACING), space.toLocal(pos.toImmutable()));
+		}
 		if (block instanceof SeatBlock) shipData.addSeat((SeatBlock) block, space.toLocal(pos.toImmutable()));
 
 		double weight = Math.min(state.getHardness(world, pos), MAX_WEIGHT);

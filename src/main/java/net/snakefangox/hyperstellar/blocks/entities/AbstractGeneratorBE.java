@@ -1,5 +1,11 @@
 package net.snakefangox.hyperstellar.blocks.entities;
 
+import java.util.Collections;
+import java.util.List;
+
+import net.snakefangox.hyperstellar.power.PowerReceiver;
+import net.snakefangox.hyperstellar.power.PowerUtil;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -8,11 +14,6 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.snakefangox.hyperstellar.power.PowerReceiver;
-import net.snakefangox.hyperstellar.power.PowerUtil;
-
-import java.util.Collections;
-import java.util.List;
 
 public abstract class AbstractGeneratorBE extends BlockEntity implements NamedScreenHandlerFactory {
 
@@ -21,6 +22,13 @@ public abstract class AbstractGeneratorBE extends BlockEntity implements NamedSc
 
 	public AbstractGeneratorBE(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
+	}
+
+	public static <T extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, T t) {
+		AbstractGeneratorBE be = (AbstractGeneratorBE) t;
+		int amount = be.tryGenerate();
+		be.provide(amount);
+		if (world.getTime() % 20 == 0) be.getPoweredBlocks();
 	}
 
 	protected abstract int getPowerRadius();
@@ -47,14 +55,15 @@ public abstract class AbstractGeneratorBE extends BlockEntity implements NamedSc
 		return demandOffsets;
 	}
 
-	public void setRedstonePowered(boolean isPowered) {
-		powered = isPowered;
-		if (!world.isClient())
-			world.setBlockState(pos, getCachedState().with(Properties.POWERED, isPowered));
-	}
-
 	public boolean isRedstonePowered() {
 		return powered;
+	}
+
+	public void setRedstonePowered(boolean isPowered) {
+		powered = isPowered;
+		if (!world.isClient()) {
+			world.setBlockState(pos, getCachedState().with(Properties.POWERED, isPowered));
+		}
 	}
 
 	protected void getPoweredBlocks() {
@@ -71,12 +80,5 @@ public abstract class AbstractGeneratorBE extends BlockEntity implements NamedSc
 	public void readNbt(NbtCompound nbt) {
 		powered = nbt.getBoolean("powered");
 		super.readNbt(nbt);
-	}
-
-	public static <T extends BlockEntity> void tick(World world, BlockPos pos, BlockState state, T t) {
-		AbstractGeneratorBE be = (AbstractGeneratorBE) t;
-		int amount = be.tryGenerate();
-		be.provide(amount);
-		if (world.getTime() % 20 == 0) be.getPoweredBlocks();
 	}
 }

@@ -1,9 +1,11 @@
 package net.snakefangox.hyperstellar.register;
 
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.item.Item;
 import net.snakefangox.hyperstellar.Hyperstellar;
 import net.snakefangox.rapidregister.annotations.RegisterContents;
+
+import net.minecraft.item.Item;
+
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 
 @RegisterContents
 public class HItems {

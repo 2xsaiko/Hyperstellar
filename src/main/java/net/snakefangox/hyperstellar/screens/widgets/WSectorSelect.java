@@ -1,16 +1,18 @@
 package net.snakefangox.hyperstellar.screens.widgets;
 
+import java.util.function.BiConsumer;
+
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.util.math.MatrixStack;
 import net.snakefangox.hyperstellar.galaxy.Sector;
 import net.snakefangox.hyperstellar.galaxy.SectorPos;
 
-import java.util.function.BiConsumer;
+import net.minecraft.client.util.math.MatrixStack;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 public class WSectorSelect extends WWidget {
 
@@ -53,7 +55,8 @@ public class WSectorSelect extends WWidget {
 		ScreenDrawing.coloredRect(matrices, x + (width - LINE_STROKE), y, LINE_STROKE, height, color);
 		ScreenDrawing.coloredRect(matrices, x, y + (height - LINE_STROKE), width - LINE_STROKE, LINE_STROKE, color);
 
-		if (width > 36)
+		if (width > 36) {
 			ScreenDrawing.drawString(matrices, pos.toCoordString(), HorizontalAlignment.CENTER, x, y + (height - 10), width, 0x22FFFFFF);
+		}
 	}
 }

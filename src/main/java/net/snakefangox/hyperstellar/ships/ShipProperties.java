@@ -1,21 +1,22 @@
 package net.snakefangox.hyperstellar.ships;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtList;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 
 public class ShipProperties {
 	private final Map<String, ShipProperty> properties = new HashMap<>();
 	private final Map<String, ShipModifier> modifiers = new HashMap<>();
 
 	public ShipProperties(ShipProperty... properties) {
-		for (ShipProperty prop : properties)
+		for (ShipProperty prop : properties) {
 			this.properties.put(prop.getName(), prop);
+		}
 	}
 
 	public ShipProperty getProperty(String propertyKey) {
@@ -36,8 +37,9 @@ public class ShipProperties {
 			modifiers.put(modifier.getName(), modifier);
 
 			for (ShipModifier.Modifier mod : modifier.getModifiers()) {
-				if (properties.containsKey(mod.property()))
+				if (properties.containsKey(mod.property())) {
 					properties.get(mod.property()).addModifier(mod);
+				}
 			}
 
 			return true;
@@ -55,8 +57,9 @@ public class ShipProperties {
 			ShipModifier modifier = modifiers.remove(modifierKey);
 
 			for (ShipModifier.Modifier mod : modifier.getModifiers()) {
-				if (properties.containsKey(mod.property()))
+				if (properties.containsKey(mod.property())) {
 					properties.get(mod.property()).removeModifier(mod);
+				}
 			}
 
 			return true;
@@ -74,8 +77,9 @@ public class ShipProperties {
 	}
 
 	public void addRaw(String propName, double amount) {
-		if (properties.containsKey(propName))
+		if (properties.containsKey(propName)) {
 			properties.get(propName).setRawValue(properties.get(propName).getRawValue() + amount);
+		}
 	}
 
 	public NbtCompound toNBT() {
@@ -83,8 +87,9 @@ public class ShipProperties {
 		NbtCompound propsNbt = new NbtCompound();
 		NbtCompound modsNbt = new NbtCompound();
 
-		for (var entry : properties.entrySet())
+		for (var entry : properties.entrySet()) {
 			propsNbt.putDouble(entry.getKey(), entry.getValue().getRawValue());
+		}
 
 		for (var entry : modifiers.entrySet()) {
 			NbtList modNBT = new NbtList();
@@ -108,8 +113,9 @@ public class ShipProperties {
 		NbtCompound propsNbt = nbt.getCompound("properties");
 		NbtCompound modsNbt = nbt.getCompound("modifiers");
 
-		for (var name : propsNbt.getKeys())
+		for (var name : propsNbt.getKeys()) {
 			addProperty(new ShipProperty(name, propsNbt.getDouble(name)));
+		}
 
 		for (var name : modsNbt.getKeys()) {
 			NbtList modNBT = modsNbt.getList(name, NbtElement.COMPOUND_TYPE);

@@ -4,13 +4,13 @@ import io.github.cottonmc.cotton.gui.SyncedGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
 import io.github.cottonmc.cotton.gui.widget.WGridPanel;
 import io.github.cottonmc.cotton.gui.widget.WItemSlot;
-import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
+import net.snakefangox.hyperstellar.register.HScreens;
+
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.util.Formatting;
-import net.snakefangox.hyperstellar.register.HScreens;
 
 public class FusionGeneratorScreen extends SyncedGuiDescription {
 
@@ -43,7 +43,7 @@ public class FusionGeneratorScreen extends SyncedGuiDescription {
 
 		WDynamicLabel powerProduced = new WDynamicLabel(() -> {
 			boolean powered = getPropertyDelegate().get(1) == 1;
-			int powerLevel = getPropertyDelegate().get(0) > 0  && powered ? getPropertyDelegate().get(2) : 0;
+			int powerLevel = getPropertyDelegate().get(0) > 0 && powered ? getPropertyDelegate().get(2) : 0;
 			return I18n.translate("hyperstellar.screen.power_generated", powerLevel);
 		});
 		root.add(powerProduced, 0, 5, 8, 1);
