@@ -47,8 +47,8 @@ public class HyperstellarClient implements ClientModInitializer {
 
 		// Sky
 		AccessSkyProperties.getBY_IDENTIFIER().put(new Identifier(Hyperstellar.MODID, "space"),
-				new SpaceSkyProperties(false, true, 0.5f, "dark_space"));
+				new SpaceSkyProperties(false, true, 0.5f, "cubemap"));
 		AccessSkyProperties.getBY_IDENTIFIER().put(new Identifier(Hyperstellar.MODID, "orbit"),
-				new SpaceSkyProperties(true, true, 0.5f, "dark_space"));
+				new SpaceSkyProperties(true, true, 0.5f, "cubemap"));
 	}
 }
