@@ -19,13 +19,14 @@ import net.snakefangox.hyperstellar.structures.ShipyardStructure;
 public class HStructures {
 	public static final StructurePieceType SHIPYARD_PIECE = ShipyardStructure.ShipyardPiece::new;
 	private static final StructureFeature<DefaultFeatureConfig> SHIPYARD_STRUCTURE = new ShipyardStructure(DefaultFeatureConfig.CODEC);
-	private static final ConfiguredStructureFeature<?, ?> SHIPYARD_CONFIGURED = SHIPYARD_STRUCTURE.configure(DefaultFeatureConfig.DEFAULT);
+	private static final ConfiguredStructureFeature<DefaultFeatureConfig, ? extends StructureFeature<DefaultFeatureConfig>> SHIPYARD_CONFIGURED = SHIPYARD_STRUCTURE.configure(DefaultFeatureConfig.DEFAULT);
 
 
 	public static void addStructures() {
 		Registry.register(Registry.STRUCTURE_PIECE, new Identifier(Hyperstellar.MODID, "shipyard_piece"), SHIPYARD_PIECE);
 		FabricStructureBuilder.create(new Identifier(Hyperstellar.MODID, "shipyard_structure"), SHIPYARD_STRUCTURE)
-				.step(GenerationStep.Feature.SURFACE_STRUCTURES).defaultConfig(16, 8, 3576843).adjustsSurface().register();
+				.step(GenerationStep.Feature.SURFACE_STRUCTURES).defaultConfig(16, 8, 3576843).adjustsSurface()
+				.superflatFeature(SHIPYARD_CONFIGURED).register();
 		RegistryKey<ConfiguredStructureFeature<?, ?>> configuredShipyardKey = RegistryKey.of(Registry.CONFIGURED_STRUCTURE_FEATURE_KEY,
 				new Identifier(Hyperstellar.MODID, "shipyard_structure"));
 		BuiltinRegistries.add(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, configuredShipyardKey.getValue(), SHIPYARD_CONFIGURED);
