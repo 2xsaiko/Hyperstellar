@@ -16,6 +16,7 @@ import net.snakefangox.hyperstellar.client.render.ShipRenderer;
 import net.snakefangox.hyperstellar.dimensions.SpaceSkyProperties;
 import net.snakefangox.hyperstellar.mixin.AccessSkyProperties;
 import net.snakefangox.hyperstellar.register.HBlocks;
+import net.snakefangox.hyperstellar.register.HClientPackets;
 import net.snakefangox.hyperstellar.register.HEntities;
 import net.snakefangox.hyperstellar.register.HScreens;
 import net.snakefangox.hyperstellar.screens.*;
@@ -50,5 +51,7 @@ public class HyperstellarClient implements ClientModInitializer {
 				new SpaceSkyProperties(false, true, 0.5f, "cubemap"));
 		AccessSkyProperties.getBY_IDENTIFIER().put(new Identifier(Hyperstellar.MODID, "orbit"),
 				new SpaceSkyProperties(true, true, 0.5f, "cubemap"));
+
+		HClientPackets.registerClientPackets();
 	}
 }
